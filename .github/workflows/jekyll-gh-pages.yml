@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -33,10 +34,25 @@ jobs:
         run: node scripts/prepare-pages.mjs
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          PAGES_STAGE_DIR: ${{ runner.temp }}/pages-site
       - name: Upload website files
+        id: artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: dist
+          path: ${{ runner.temp }}/pages-site
+      - name: Wait for Pages artifact registration
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.artifact.outputs.artifact_id }}
+        run: |
+          for i in {1..8}; do
+            if found=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" --jq 'select(.name == "github-pages" and .expired == false) | .id' 2>/dev/null) && [[ "$found" == "$ARTIFACT_ID" && -n "$found" ]]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::The uploaded GitHub Pages artifact did not become available."
+          exit 1
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

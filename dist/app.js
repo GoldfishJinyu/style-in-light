@@ -122,7 +122,6 @@ const filterState = Object.fromEntries(["search", ...Object.keys(filters)].map(k
 const filterLabels = { visual: "visuals", material: "materials", shape: "shapes", decoration: "trims", mood: "moods", domain: "domains" };
 const outfitDisplays = { any: "showAny", feminine: "showFeminine", neutral: "showNeutral" };
 const fonts = { "DM Sans": "dm-sans", "DM Serif Display": "dm-serif-display", "Noto Serif SC": "noto-serif-sc", "Noto Serif TC": "noto-serif-tc" };
-const photos = Object.fromEntries(Object.values(styleImages).flat().map(image => [image.file, image]));
 let outfitDisplay = "any";
 let feedback = { avoid: "", mood: false, daily: false };
 let step = 0;
@@ -163,8 +162,13 @@ function finished() {
   return answers.length === questions.length && answers.every(Number.isInteger);
 }
 
+function verifiedImage(image) {
+  const record = imageLicenses[image?.file];
+  return record && record.permissionStatus !== "unverified";
+}
+
 function picture(image, extra = "") {
-  if (!imageLicenses[image?.file]) return `<span class="image-placeholder">${t("imagePending")}</span>`;
+  if (!verifiedImage(image)) return `<span class="image-placeholder">${t("imagePending")}</span>`;
   const alt = imageAlts[image.file] ? translate(imageAlts[image.file]) : image.title;
   return `<img ${extra} src="${new URL("media/" + image.file, siteRoot).href}" alt="${escapeHtml(alt)}" decoding="async">`;
 }
@@ -172,6 +176,9 @@ function picture(image, extra = "") {
 function imageCredit(image) {
   const record = imageLicenses[image?.file];
   if (!record) return t("imagePending");
+  if (!verifiedImage(image)) {
+    return `<a href="${escapeHtml(record.source)}" target="_blank" rel="noopener noreferrer">${t("imagePending")}</a>`;
+  }
   const license = record.license === "Public domain" ? t("publicDomain") : record.license;
   const maker = record.author || t("creatorUnknown");
   return `<a href="${escapeHtml(record.source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(maker)}</a> · ${
@@ -181,7 +188,7 @@ function imageCredit(image) {
 
 function licenseDetails(image) {
   const record = imageLicenses[image.file];
-  return record ? `<span><a href="${escapeHtml(record.original)}" target="_blank" rel="noopener noreferrer">${t("originalImage")}</a> · ${t("checked")} <time datetime="${record.checked}">${record.checked}</time><br>${t(record.attribution)}</span>` : "";
+  return verifiedImage(image) ? `<span><a href="${escapeHtml(record.original)}" target="_blank" rel="noopener noreferrer">${t("originalImage")}</a> · ${t("checked")} <time datetime="${record.checked}">${record.checked}</time><br>${t(record.attribution)}</span>` : "";
 }
 
 function imageDetails(image) {
@@ -325,7 +332,7 @@ function renderQuiz(focus = true) {
       <form id="question-form">
         <fieldset class="question-options ${question.id === "image" ? "picture-options" : ""}"><legend class="sr-only">${title}</legend>
           ${question.choices.map((choice, value) => {
-            const visual = question.id === "image" ? `<span class="texture-photo">${picture(photos[choice[3]])}</span>` : choice[4] ? palette(choice[4]) : "";
+            const visual = question.id === "image" ? `<span class="texture-photo">${picture({ file: choice[3] })}</span>` : choice[4] ? palette(choice[4]) : "";
             return `<label class="option">${question.id === "image" ? visual : ""}<span class="option-label">
               <input type="radio" name="answer" value="${value}" ${answers[index] === value ? "checked" : ""}>
               <span>${translate(choice)}${question.id !== "image" ? visual : ""}</span><span class="selection-mark" aria-hidden="true">✓</span>
@@ -463,7 +470,7 @@ function renderDetail(style) {
     ${images.length ? `<section class="details-section guide-photos chapter"><h2>${t("moodboard")}</h2><div class="moodboard">${images.map(imageDetails).join("")}</div></section>` : ""}
     <section class="details-section guide-sources chapter"><h2>${t("source")}</h2><p class="subtle">${t("editorial")}</p>
       ${source ? `<p><a href="${source}" target="_blank" rel="noopener noreferrer">${sourceText}</a></p>` : ""}
-      <ul class="source-links">${images.filter(image => imageLicenses[image.file]).map(image =>
+      <ul class="source-links">${images.filter(verifiedImage).map(image =>
         `<li><a href="${escapeHtml(imageLicenses[image.file].source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(image.title)}</a></li>`
       ).join("")}</ul>
     </section></div></article>`;
