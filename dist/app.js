@@ -3,16 +3,13 @@
 const copy = {
   brand: ["美学坐标", "Aesthetic Coordinates"],
   title: ["美学坐标 · 个人风格探索", "Aesthetic Coordinates · Find your style"],
-  subtitle: ["从穿搭、物件、艺术和音乐里，发现自己的风格。", "Find your style through clothing, objects, art and music."],
   heroTop: ["找到你的", "Find your"],
   heroBottom: ["美学坐标", "aesthetic."],
-  heroText: ["从性格和视觉偏好出发，看看哪些风格与你契合，再把灵感带进衣柜、房间和周末。", "Start with how you move through the world and what catches your eye. Then bring the styles that fit into your wardrobe, your room and your weekends."],
   heroCaption: ["从历史服饰、日常材质和网络视觉中找灵感。", "Inspiration from dress history, everyday materials and online visual culture."],
   quiz: ["开始风格测试", "Take the style quiz"],
   resume: ["继续答题", "Continue the quiz"],
   report: ["我的报告", "My report"],
   library: ["风格图鉴", "Style library"],
-  libraryText: ["按时代、地区和风格类别探索。标签标的是主要灵感语境。", "Browse by era, region or collection. Labels describe each style’s main reference points."],
   skip: ["跳到主要内容", "Skip to main content"],
   navigation: ["主导航", "Main navigation"],
   language: ["语言", "Language"],
@@ -27,13 +24,8 @@ const copy = {
   noResults: ["没有符合条件的风格，试试调整筛选。", "No styles match. Try changing the filters."],
   found: ["种风格", "styles"],
   search: ["搜索风格或元素", "Search styles or elements"],
-  searchHint: ["如 蝴蝶结、金属、哥特", "Try bows, metal or Gothic"],
   era: ["时代", "Era"],
   region: ["地区", "Region"],
-  collection: ["类别", "Collection"],
-  allEra: ["所有时代", "All eras"],
-  allRegion: ["所有地区", "All regions"],
-  allCollection: ["所有类别", "All collections"],
   reset: ["清除筛选", "Clear filters"],
   early: ["17–18 世纪", "17th–18th centuries"],
   nineteenth: ["19 世纪", "19th century"],
@@ -53,42 +45,17 @@ const copy = {
   retro: ["复古灵感", "Vintage inspiration"],
   design: ["生活与设计", "Living and design"],
   online: ["网感标签", "Online style labels"],
-  startTitle: ["选择测试长度", "Choose your quiz length"],
-  startText: ["两种测试都会给出前三种风格。长测会多问一些材质、文化和细节偏好。", "Both quizzes give you three recommendations. The long quiz asks more about materials, cultural reference points and details."],
-  quick: ["短测", "Quick quiz"],
-  long: ["长测", "In-depth quiz"],
-  quickDetail: ["8 题 · 约 2 分钟", "8 questions · about 2 minutes"],
-  longDetail: ["16 题 · 约 5 分钟", "16 questions · about 5 minutes"],
-  aboutProfile: ["昵称用于称呼。年龄与性别可选，仅显示在当次报告中。", "Your name personalizes your report. Age and gender are optional and only appear in your current report."],
-  nickname: ["昵称（可选）", "Name (optional)"],
-  nicknameHint: ["想让报告怎么称呼你？", "What should we call you?"],
-  age: ["年龄段（可选）", "Age group (optional)"],
-  gender: ["性别（可选）", "Gender (optional)"],
-  skipField: ["暂不填写", "Prefer not to say"],
-  under18: ["18 岁以下", "Under 18"],
-  over45: ["45 岁及以上", "45 or older"],
-  woman: ["女性", "Woman"],
-  man: ["男性", "Man"],
-  nonbinary: ["非二元", "Non-binary"],
-  other: ["其他", "Other"],
   begin: ["开始答题", "Start answering"],
   home: ["返回首页", "Back to home"],
-  personality: ["性格与表达", "Personality and expression"],
   visual: ["审美偏好", "Visual preferences"],
   progress: ["问卷进度", "Quiz progress"],
   unanswered: ["请先选择一个答案。", "Choose an answer to continue."],
-  backInfo: ["返回基本信息", "Back to profile"],
+  backInfo: ["返回测试说明", "Back to quiz intro"],
   previous: ["上一题", "Previous"],
   next: ["下一题", "Next"],
   generate: ["生成风格报告", "See my results"],
-  reportName: ["的风格报告", "’s style report"],
   reportTitle: ["你的风格报告", "Your style report"],
-  reportText: ["这三种风格最贴近你选出的颜色、材质、时代和表达方式。", "These three styles are the closest to your choices around color, texture, era and self-expression."],
-  reportWhy: ["你的选择中与这类风格相关的线索", "Cues from your answers that fit this style"],
   reportMore: ["查看风格详情", "Explore the style"],
-  first: ["最贴近", "Closest match"],
-  second: ["第二推荐", "Second match"],
-  third: ["第三推荐", "Third match"],
   restart: ["重新测试", "Start a new quiz"],
   edit: ["修改答案", "Edit answers"],
   backLibrary: ["返回风格图鉴", "Back to the library"],
@@ -101,7 +68,8 @@ const copy = {
   artist: ["艺术与创作者", "Art and makers"],
   place: ["地点与氛围", "Places and atmosphere"],
   music: ["音乐推荐", "Music pairing"],
-  inspiration: ["把风格带进日常", "Bring the style into everyday life"]
+  inspiration: ["把风格带进日常", "Bring the style into everyday life"],
+  ...phaseCopy
 };
 
 const get = id => document.getElementById(id);
@@ -139,16 +107,24 @@ const saved = {
 };
 let locale = ["zh-Hans", "zh-Hant", "en"].includes(saved.get("locale")) ? saved.get("locale") : "zh-Hans";
 let theme = saved.get("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-const filterState = { search: "", era: "", region: "", collection: "" };
 const filters = {
   era: "early nineteenth mid late millennium online today".split(" "),
   region: "europe asia america global".split(" "),
-  collection: "history retro subculture pop design digital online".split(" ")
+  collection: "history retro subculture pop design digital online".split(" "),
+  visual: Object.keys(facetTags.visual),
+  material: Object.keys(facetTags.material),
+  shape: Object.keys(facetTags.shape),
+  decoration: Object.keys(facetTags.decoration),
+  mood: Object.keys(facetTags.mood),
+  domain: Object.keys(facetTags.domain)
 };
-const profile = { name: "", age: "", gender: "", mode: "quick" };
-const ages = { "": "skipField", under18: "under18", "18–24": "18–24", "25–34": "25–34", "35–44": "35–44", over45: "over45" };
-const genders = { "": "skipField", woman: "woman", man: "man", nonbinary: "nonbinary", other: "other" };
+const filterState = Object.fromEntries(["search", ...Object.keys(filters)].map(key => [key, ""]));
+const filterLabels = { visual: "visuals", material: "materials", shape: "shapes", decoration: "trims", mood: "moods", domain: "domains" };
+const outfitDisplays = { any: "showAny", feminine: "showFeminine", neutral: "showNeutral" };
 const fonts = { "DM Sans": "dm-sans", "DM Serif Display": "dm-serif-display", "Noto Serif SC": "noto-serif-sc", "Noto Serif TC": "noto-serif-tc" };
+const photos = Object.fromEntries(Object.values(styleImages).flat().map(image => [image.file, image]));
+let outfitDisplay = "any";
+let feedback = { avoid: "", mood: false, daily: false };
 let step = 0;
 let answers = [];
 
@@ -161,17 +137,16 @@ function t(key) {
   return copy[key] ? translate(copy[key]) : key;
 }
 
+function tagText(tag) {
+  return translate(tagLabels[tag]);
+}
+
 function styleText(style) {
   if (locale === "en") return style.en;
   if (locale === "zh-Hans") return style.zh;
   return Object.fromEntries(Object.entries(style.zh).map(([key, value]) =>
     [key, key === "music" ? value : toTraditional(value)]
   ));
-}
-
-function questionText(question) {
-  if (locale === "en") return question.en;
-  return locale === "zh-Hant" ? question.zh.map(toTraditional) : question.zh;
 }
 
 function eraLabel(era) {
@@ -184,49 +159,59 @@ function escapeHtml(value) {
   })[character]);
 }
 
-function quizLength() {
-  return profile.mode === "long" ? questions.length : shortLength;
-}
-
 function finished() {
-  return answers.length === quizLength() && answers.every(Number.isInteger);
+  return answers.length === questions.length && answers.every(Number.isInteger);
 }
 
-function picture(image, alt, extra = "") {
-  if (!image) return "";
+function picture(image, extra = "") {
+  if (!imageLicenses[image?.file]) return `<span class="image-placeholder">${t("imagePending")}</span>`;
+  const alt = imageAlts[image.file] ? translate(imageAlts[image.file]) : image.title;
   return `<img ${extra} src="${new URL("media/" + image.file, siteRoot).href}" alt="${escapeHtml(alt)}" decoding="async">`;
 }
 
 function imageCredit(image) {
-  const license = image.license === "Public domain" ? t("publicDomain") : image.license;
-  const maker = image.author || t("creatorUnknown");
-  return `<a href="${escapeHtml(image.source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(maker)}</a> · ${
-    image.licenseUrl ? `<a href="${escapeHtml(image.licenseUrl)}" target="_blank" rel="noopener noreferrer">${license}</a>` : license
+  const record = imageLicenses[image?.file];
+  if (!record) return t("imagePending");
+  const license = record.license === "Public domain" ? t("publicDomain") : record.license;
+  const maker = record.author || t("creatorUnknown");
+  return `<a href="${escapeHtml(record.source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(maker)}</a> · ${
+    record.licenseUrl ? `<a href="${escapeHtml(record.licenseUrl)}" target="_blank" rel="noopener noreferrer">${license}</a>` : license
   }`;
+}
+
+function licenseDetails(image) {
+  const record = imageLicenses[image.file];
+  return record ? `<span><a href="${escapeHtml(record.original)}" target="_blank" rel="noopener noreferrer">${t("originalImage")}</a> · ${t("checked")} <time datetime="${record.checked}">${record.checked}</time><br>${t(record.attribution)}</span>` : "";
 }
 
 function imageDetails(image) {
   const name = image.title.replace(/\.(jpe?g|png|webp)$/i, "");
-  return `<figure>${picture(image, name, 'loading="lazy"')}<figcaption><span>${escapeHtml(name)}</span><span>${imageCredit(image)}</span></figcaption></figure>`;
+  return `<figure>${picture(image, 'loading="lazy"')}<figcaption><span>${escapeHtml(name)}</span><span>${imageCredit(image)}</span>${licenseDetails(image)}</figcaption></figure>`;
 }
 
-function palette(style) {
-  return `<div class="swatches" role="img" aria-label="${t("palette")}: ${style.palette.join(", ")}">${style.palette.map(color =>
+function palette(colors) {
+  return `<div class="swatches" role="img" aria-label="${t("palette")} ${colors.join(", ")}">${colors.map(color =>
     `<span style="--swatch:${color}" title="${color}"></span>`
   ).join("")}</div>`;
 }
 
 function renderFilters() {
   const root = get("filters");
+  const select = key => {
+    const label = key === "era" ? eraLabel : filterLabels[key] ? tagText : t;
+    return `<label>${t(filterLabels[key] || key)}<select name="${key}"><option value="">${t("allFilters")}</option>
+      ${filters[key].map(value => `<option value="${value}">${label(value)}</option>`).join("")}</select></label>`;
+  };
   root.innerHTML = `
+    <div class="filter-row">
     <label class="search-filter">${t("search")}<input type="search" name="search" placeholder="${t("searchHint")}"></label>
-    ${Object.entries(filters).map(([key, values]) => {
-      const label = key === "era" ? eraLabel : t;
-      const all = "all" + key[0].toUpperCase() + key.slice(1);
-      return `<label>${t(key)}<select name="${key}"><option value="">${t(all)}</option>
-        ${values.map(value => `<option value="${value}">${label(value)}</option>`).join("")}</select></label>`;
-    }).join("")}
-    <button class="button outline small" type="button" id="reset-filters">${t("reset")}</button>`;
+    ${["collection", "visual", "mood"].map(select).join("")}
+    <button class="button outline small" type="button" id="reset-filters">${t("reset")}</button>
+    </div>
+    <details class="extra-filters" ${["era", "region", "material", "shape", "decoration", "domain"].some(key => filterState[key]) ? "open" : ""}>
+      <summary>${t("facetOptions")}</summary>
+      <div class="filter-row">${["era", "region", "material", "shape", "decoration", "domain"].map(select).join("")}</div>
+    </details>`;
   for (const [key, value] of Object.entries(filterState)) root.elements.namedItem(key).value = value;
   get("reset-filters").addEventListener("click", () => {
     for (const key of Object.keys(filterState)) filterState[key] = "";
@@ -238,17 +223,20 @@ function renderFilters() {
 function renderLibrary() {
   const term = filterState.search.trim().toLocaleLowerCase();
   const visible = catalog.filter(style => {
-    if (Object.keys(filters).some(key => filterState[key] && filterState[key] !== style[key])) return false;
+    const guide = guides[style.id];
+    const buckets = { era: guide.era, region: guide.region, collection: [style.collection], domain: guide.domains };
+    if (Object.keys(filters).some(key => filterState[key] && !(buckets[key] || guide.tags).includes(filterState[key]))) return false;
     if (!term) return true;
-    const fields = [style.zh.name, style.zh.elements, style.en.name, style.en.elements];
-    return fields.concat(fields.slice(0, 2).map(toTraditional)).some(field => field.toLocaleLowerCase().includes(term));
+    const tags = [...guide.tags, ...guide.domains].map(tag => tagLabels[tag]);
+    const fields = [[style.zh.name, style.en.name], [style.zh.elements, style.en.elements], ...tags];
+    return fields.flatMap(([zh, en]) => [zh, en, toTraditional(zh)]).some(field => field.toLocaleLowerCase().includes(term));
   });
   get("count").textContent = visible.length ? `${visible.length} ${t("found")}` : t("noResults");
   get("style-grid").innerHTML = visible.map(style => {
     const text = styleText(style);
     return `<a class="style-card" href="${pageHref("style-" + style.id)}">
-      <div class="card-image">${picture(styleImages[style.id]?.[0], "", 'loading="lazy"')}</div>
-      <div class="card-copy"><span class="card-category">${eraLabel(style.era)} · ${t(style.region)}</span><h3>${text.name}</h3><p>${text.elements.split(locale === "en" ? ", " : "、").slice(0, 3).join(" · ")}</p></div>
+      <div class="card-image">${picture(styleImages[style.id]?.[0], 'loading="lazy"')}</div>
+      <div class="card-copy"><span class="card-category">${t(style.collection)} · ${eraLabel(style.era)}</span><h3>${text.name}</h3><p>${text.elements.split(locale === "en" ? ", " : "、").slice(0, 3).join(" · ")}</p></div>
     </a>`;
   }).join("");
 }
@@ -275,8 +263,6 @@ function renderChrome() {
   get("locale").value = locale;
   get("nav-library").textContent = t("library");
   get("nav-library").href = pageHref("styles");
-  get("nav-quiz").textContent = t(finished() ? "report" : step ? "resume" : "quiz");
-  get("nav-quiz").href = finished() ? "#report" : "#quiz";
   const image = styleImages.hero?.[0];
   get("hero").innerHTML = `
     <div class="hero-copy">
@@ -285,7 +271,7 @@ function renderChrome() {
       <div class="hero-actions"><a class="button" id="hero-quiz" href="${pageHref("quiz")}">${t("quiz")}</a><a class="text-link" href="${pageHref("styles")}">${t("library")}</a></div>
     </div>
     <figure class="hero-art">
-      ${picture(image, "", 'fetchpriority="high"')}
+      ${picture(image, 'fetchpriority="high"')}
       <figcaption><span>${t("heroCaption")}</span>${image ? `<span>${imageCredit(image)}</span>` : ""}</figcaption>
     </figure>`;
   get("library-head").innerHTML = `<h2 id="library-title" tabindex="-1">${t("library")}</h2><p>${t("libraryText")}</p>`;
@@ -303,14 +289,6 @@ function updateQuizLinks() {
   }
 }
 
-function rememberProfile(form) {
-  const data = new FormData(form);
-  profile.name = String(data.get("name") || "").trim();
-  profile.age = String(data.get("age") || "");
-  profile.gender = String(data.get("gender") || "");
-  profile.mode = String(data.get("mode") || "quick");
-}
-
 function options(values, selected) {
   return Object.entries(values).map(([value, label]) =>
     `<option value="${value}" ${value === selected ? "selected" : ""}>${t(label)}</option>`
@@ -323,45 +301,41 @@ function renderQuiz(focus = true) {
     root.innerHTML = `
       <h1 tabindex="-1">${t("startTitle")}</h1><p class="subtle">${t("startText")}</p>
       <form id="profile-form">
-        <fieldset class="mode-options"><legend class="sr-only">${t("startTitle")}</legend>
-          ${["quick", "long"].map(mode =>
-            `<label class="option mode-option"><input type="radio" name="mode" value="${mode}" ${profile.mode === mode ? "checked" : ""}><span><strong>${t(mode)}</strong><small>${t(mode + "Detail")}</small></span></label>`
-          ).join("")}
-        </fieldset>
-        <p class="profile-note">${t("aboutProfile")}</p>
-        <div class="fields">
-          <label>${t("nickname")}<input name="name" autocomplete="nickname" value="${escapeHtml(profile.name)}" maxlength="24" placeholder="${t("nicknameHint")}"></label>
-          <label>${t("age")}<select name="age">${options(ages, profile.age)}</select></label>
-          <label>${t("gender")}<select name="gender">${options(genders, profile.gender)}</select></label>
-        </div>
+        <label class="outfit-field">${t("showWear")}<select name="outfit" aria-describedby="outfit-note">${options(outfitDisplays, outfitDisplay)}</select></label>
+        <p class="profile-note" id="outfit-note">${t("aboutProfile")}</p>
         <div class="flow-actions"><a class="text-link" href="${pageHref("home")}">${t("home")}</a><button class="button" type="submit">${t("begin")}</button></div>
       </form>`;
     const form = get("profile-form");
-    form.addEventListener("input", () => rememberProfile(form));
+    form.addEventListener("change", () => { outfitDisplay = form.elements.outfit.value; });
     form.addEventListener("submit", event => {
       event.preventDefault();
-      rememberProfile(form);
-      if (answers.length !== quizLength()) answers = Array(quizLength()).fill(null);
+      if (answers.length !== questions.length) answers = Array(questions.length).fill(null);
       step = 1;
       renderQuiz();
     });
   } else {
     const index = step - 1;
     const question = questions[index];
-    const [title, ...choices] = questionText(question);
+    const title = translate(question.title);
     root.innerHTML = `
-      <div class="question-top"><span>${t(question.group)}</span><span>${step} / ${quizLength()}</span></div>
-      <progress aria-label="${t("progress")}" value="${step}" max="${quizLength()}"></progress>
+      <div class="question-top"><span>${t(["scene", "focus", "visibility"].includes(question.id) ? "context" : "visual")}</span><span>${step} / ${questions.length}</span></div>
+      <progress aria-label="${t("progress")}" value="${step}" max="${questions.length}"></progress>
       <h1 tabindex="-1">${title}</h1>
+      ${question.hint ? `<p class="subtle">${translate(question.hint)}</p>` : ""}
       <form id="question-form">
-        <fieldset class="question-options"><legend class="sr-only">${title}</legend>
-          ${choices.map((choice, value) =>
-            `<label class="option"><input type="radio" name="answer" value="${value}" ${answers[index] === value ? "checked" : ""}><span>${choice}</span></label>`
-          ).join("")}
+        <fieldset class="question-options ${question.id === "image" ? "picture-options" : ""}"><legend class="sr-only">${title}</legend>
+          ${question.choices.map((choice, value) => {
+            const visual = question.id === "image" ? `<span class="texture-photo">${picture(photos[choice[3]])}</span>` : choice[4] ? palette(choice[4]) : "";
+            return `<label class="option">${question.id === "image" ? visual : ""}<span class="option-label">
+              <input type="radio" name="answer" value="${value}" ${answers[index] === value ? "checked" : ""}>
+              <span>${translate(choice)}${question.id !== "image" ? visual : ""}</span><span class="selection-mark" aria-hidden="true">✓</span>
+            </span></label>`;
+          }).join("")}
         </fieldset>
+        ${question.id === "image" ? `<a class="text-link texture-credits" href="${pageHref("credits")}" target="_blank" rel="noopener">${t("credits")}</a>` : ""}
         <p class="validation" id="answer-error" role="alert" hidden>${t("unanswered")}</p>
         <div class="flow-actions"><button id="previous" class="button outline" type="button">${t(step === 1 ? "backInfo" : "previous")}</button>
-          <button class="button" type="submit">${t(step === quizLength() ? "generate" : "next")}</button></div>
+          <button class="button" type="submit">${t(step === questions.length ? "generate" : "next")}</button></div>
       </form>`;
     const form = get("question-form");
     form.addEventListener("change", event => {
@@ -373,7 +347,7 @@ function renderQuiz(focus = true) {
       if (!Number.isInteger(answers[index])) {
         get("answer-error").hidden = false;
         form.querySelector("input").focus();
-      } else if (step === quizLength()) {
+      } else if (step === questions.length) {
         navigate("report");
       } else {
         step++;
@@ -385,52 +359,184 @@ function renderQuiz(focus = true) {
       renderQuiz();
     });
   }
-  if (focus) root.querySelector("h1").focus({ preventScroll: true });
+  if (focus) root.querySelector("h1").focus();
 }
 
-function inspiration(text) {
-  const labels = { wardrobe: "outfit", objects: "objects", artist: "art", place: "place", music: "music" };
-  return `<div class="details-grid">${Object.entries(labels).map(([key, field]) =>
-    `<article class="${key === "music" ? "music" : ""}"><h3>${t(key)}</h3><p>${text[field]}</p></article>`
-  ).join("")}</div>`;
+function spaceIdea(style) {
+  return t("spaceMid") + " " + styleText(style).objects;
+}
+
+function outfitIdea(style, useDisplay) {
+  if (useDisplay && outfitDisplay !== "any") {
+    const base = t(outfitDisplay === "feminine" ? "feminineTip" : "neutralTip");
+    const cue = guides[style.id].tags.find(tag => Object.hasOwn(facetTags.decoration, tag) && tag !== feedback.avoid);
+    return cue ? `${base} ${t("chosenCue")} ${tagText(cue)}.` : base;
+  }
+  return styleText(style).outfit;
+}
+
+function inspiration(style, first = "wardrobe", useDisplay = false) {
+  const text = styleText(style);
+  const feature = featuredGuides[style.id];
+  const cards = {
+    wardrobe: outfitIdea(style, useDisplay),
+    space: spaceIdea(style),
+    objects: text.objects,
+    artist: text.art,
+    place: text.place,
+    music: text.music
+  };
+  cards.film = translate(feature?.film || filmReferences[style.id]);
+  return `<div class="details-grid">${[first, ...Object.keys(cards).filter(key => key !== first)].map(key => {
+    const label = ["artist", "place", "music", "film"].includes(key) ? ` <span class="mood-label">${t("atmosphere")}</span>` : "";
+    return `<article><h3>${t(key)}${label}</h3><p>${cards[key]}</p></article>`;
+  }).join("")}</div>`;
+}
+
+function detailTags(style) {
+  const guide = guides[style.id];
+  const groups = {
+    collection: t(style.collection), era: guide.era.map(eraLabel).join(" · "), region: guide.region.map(t).join(" · ")
+  };
+  for (const group of ["visual", "material", "shape", "decoration", "mood"]) {
+    groups[filterLabels[group]] = guide.tags.filter(tag => Object.hasOwn(facetTags[group], tag)).map(tagText).join(" · ");
+  }
+  groups.domains = guide.domains.map(tagText).join(" · ");
+  return `<dl class="style-facts">${Object.entries(groups).filter(([, value]) => value).map(([label, value]) =>
+    `<div><dt>${t(label)}</dt><dd>${value}</dd></div>`
+  ).join("")}</dl>`;
+}
+
+function relatedStyle(style, feature) {
+  const tags = guides[style.id].tags;
+  const candidates = catalog.filter(item => item.id !== style.id).map(item => ({
+    item, common: guides[item.id].tags.filter(tag => tags.includes(tag))
+  }));
+  const related = feature
+    ? candidates.find(({ item }) => item.id === feature.neighbor)
+    : candidates.sort((a, b) => b.common.length - a.common.length)[0];
+  const distinctive = guides[related.item.id].tags.filter(tag => !tags.includes(tag)).slice(0, 3);
+  const details = feature ? translate(feature.difference) : distinctive.map(tagText).join(" · ");
+  return `<article class="comparison">
+    <a href="${pageHref("style-" + related.item.id)}">${styleText(related.item).name}</a>
+    ${related.common.length ? `<p><strong>${t("similar")}</strong> ${related.common.slice(0, 3).map(tagText).join(" · ")}</p>` : ""}
+    ${details ? `<p><strong>${t("difference")}</strong> ${details}</p>` : ""}
+  </article>`;
 }
 
 function renderDetail(style) {
   const text = styleText(style);
   const images = styleImages[style.id] || [];
+  const feature = featuredGuides[style.id];
+  const definition = feature?.background || workingDefinitions[style.id];
+  const definitionText = definition ? translate(definition) : text.description;
+  const source = feature?.source;
+  const sourceText = feature?.sourceNote ? translate(feature.sourceNote) : t("sourceEntry");
   get("detail-content").innerHTML = `
+    <div class="detail-theme" data-style="${style.id}" data-motif="${feature?.theme || style.collection}">
     <div class="back-links"><a class="text-link" href="${pageHref("styles")}">${t("backLibrary")}</a>${finished() ? `<a class="text-link" href="${pageHref("report")}">${t("backReport")}</a>` : ""}</div>
     <section class="feature">
       <div class="feature-copy"><p class="overline">${eraLabel(style.era)} · ${t(style.region)} · ${t(style.collection)}</p>
-        <h1 tabindex="-1">${text.name}</h1><p class="lede">${text.description}</p>${palette(style)}
+        <h1 tabindex="-1">${text.name}</h1><p class="lede">${text.description}</p>${palette(style.palette)}
       </div>
-      <div class="feature-image">${picture(images[0], "", 'fetchpriority="high"')}</div>
+      <div class="feature-image">${picture(images[0], 'fetchpriority="high"')}</div>
     </section>
+    <section class="details-section guide-overview"><h2>${t("about")}</h2><p>${definitionText}</p>${detailTags(style)}</section>
     <section class="details-section"><h2>${t("elements")}</h2>
       <ul class="elements">${text.elements.split(locale === "en" ? ", " : "、").map(element => `<li>${element}</li>`).join("")}</ul>
     </section>
-    <section class="details-section"><h2>${t("inspiration")}</h2>${inspiration(text)}</section>
-    ${images.length ? `<section class="details-section"><h2>${t("moodboard")}</h2><div class="moodboard">${images.map(imageDetails).join("")}</div></section>` : ""}`;
+    <section class="details-section"><h2>${t("neighbor")}</h2>${relatedStyle(style, feature)}</section>
+    <section class="details-section starter"><h2>${t("lowTry")}</h2><p>${feature ? translate(feature.starter) : text.outfit + " " + t("wearSmall")}</p></section>
+    <section class="details-section"><h2>${t("inspiration")}</h2>${inspiration(style)}</section>
+    ${images.length ? `<section class="details-section"><h2>${t("moodboard")}</h2><div class="moodboard">${images.map(imageDetails).join("")}</div></section>` : ""}
+    <section class="details-section"><h2>${t("source")}</h2><p class="subtle">${t("editorial")}</p>
+      ${source ? `<p><a href="${source}" target="_blank" rel="noopener noreferrer">${sourceText}</a></p>` : ""}
+      <ul class="source-links">${images.filter(image => imageLicenses[image.file]).map(image =>
+        `<li><a href="${escapeHtml(imageLicenses[image.file].source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(image.title)}</a></li>`
+      ).join("")}</ul>
+    </section></div>`;
 }
 
-function renderReport() {
-  const rank = rankStyles(answers);
-  const name = profile.name ? escapeHtml(profile.name) + t("reportName") : t("reportTitle");
-  const details = [profile.age && t(ages[profile.age]), profile.gender && t(genders[profile.gender])].filter(Boolean).join(" · ");
+function trialIdeas(style, first, cue) {
+  const groups = {
+    wardrobe: ["wearSmall", "wearMid", "wearFull"],
+    space: ["spaceSmall", "spaceMid", "spaceFull"],
+    objects: ["objectSmall", "objectMid", "objectFull"]
+  };
+  const labels = first === "wardrobe" ? ["startSmall", "addLayer", "fullLook"] : ["scaleSmall", "addLayer", "scaleFull"];
+  return `<div class="trial-grid">${groups[first].map((item, index) => {
+    const specific = first === "wardrobe" && index === 2 && outfitDisplay !== "any" ? " " + outfitIdea(style, true) : "";
+    return `<article><h3>${t(labels[index])}</h3><p>${t(item)}${specific}</p>
+      ${index === 0 && cue ? `<p class="trial-cue">${t("chosenCue")} ${tagText(cue)}</p>` : ""}</article>`;
+  }).join("")}</div>`;
+}
+
+function renderReport(updated = false) {
+  const rank = rankStyles(answers, feedback);
+  const preferences = selectedAnswers(answers);
+  const displayOrder = preferences.find(({ question }) => question.id === "focus").choice[3];
+  const first = feedback.mood && displayOrder === "wardrobe" ? "space" : displayOrder;
+  const avoided = new Set([...preferences.find(({ question }) => question.id === "avoid").choice[2], feedback.avoid]);
+  const summaryChoices = preferences.filter(({ question, choice }) =>
+    ["color", "material", "shape"].includes(question.id) && !choice[2].some(tag => avoided.has(tag))
+  ).map(({ choice }) => translate(choice));
+  const visualSummary = (summaryChoices.length ? summaryChoices : rank[0].reasons.map(tagText))
+    .join(locale === "en" ? ", " : "、");
+  const collective = sharedTags(rank).filter(({ tag }) => !avoided.has(tag));
+  const preferred = rank[0];
+  const safeCue = preferred.reasons.find(tag => !Object.hasOwn(facetTags.context, tag));
+  const available = [...new Set([feedback.avoid, ...rank.flatMap(({ style }) => guides[style.id].tags)
+    .filter(tag => ["visual", "material", "shape", "decoration"].some(group => Object.hasOwn(facetTags[group], tag)))].filter(Boolean))];
   const markers = ["first", "second", "third"];
   get("report-content").innerHTML = `
-    <header class="report-head"><h1 tabindex="-1">${name}</h1><p class="lede">${t("reportText")}</p>${details ? `<p class="profile-note">${details}</p>` : ""}</header>
+    <header class="report-head"><h1 tabindex="-1">${t("reportTitle")}</h1>
+      ${visualSummary ? `<p class="report-summary">${t("summaryLead")} ${visualSummary}${locale === "en" ? "." : "。"}</p>` : ""}
+      <p class="lede">${t("reportText")}</p></header>
     <div class="report-grid">${rank.map(({ style, reasons }, index) => {
       const text = styleText(style);
       return `<article class="recommendation">
-        <div class="card-image">${picture(styleImages[style.id]?.[0], "", 'loading="lazy"')}</div>
+        <div class="card-image">${picture(styleImages[style.id]?.[0], 'loading="lazy"')}</div>
         <div class="recommendation-copy"><p class="overline">${t(markers[index])}</p><h2>${text.name}</h2><p>${text.description}</p>
-          ${palette(style)}
-          ${reasons.length ? `<p class="reason"><strong>${t("reportWhy")}</strong><br>${reasons.map(({ question, choice }) => questionText(question)[choice + 1]).join(" · ")}</p>` : ""}
+          ${palette(style.palette)}
+          <p class="reason">${reasons.length ? `<strong>${t("reportWhy")}</strong><br>${reasons.map(tagText).join(" · ")}` : t("noDirectMatch")}</p>
           <a class="text-link" href="${pageHref("style-" + style.id)}">${t("reportMore")}</a></div></article>`;
     }).join("")}</div>
-    <section class="details-section"><h2>${t("inspiration")} · ${styleText(rank[0].style).name}</h2>${inspiration(styleText(rank[0].style))}</section>
+    <section class="details-section"><h2>${t("shared")}</h2>
+      ${collective.length ? `<ul class="elements shared-tags">${collective.map(({tag,count}) =>
+        `<li>${tagText(tag)} <small>${t(count === 3 ? "commonThree" : "commonTwo")}</small></li>`
+      ).join("")}</ul>` : `<p>${t("noCommon")}</p>`}
+    </section>
+    <section class="details-section feedback-panel"><h2>${t("refine")}</h2><p>${t("refineHelp")}</p>
+      <form id="feedback-form">
+        <label class="outfit-field">${t("dislike")}<select name="avoid"><option value="">${t("nothing")}</option>
+          ${available.map(tag => `<option value="${tag}" ${feedback.avoid === tag ? "selected" : ""}>${tagText(tag)}</option>`).join("")}
+        </select></label>
+        <label class="feedback-check"><input name="mood" type="checkbox" ${feedback.mood ? "checked" : ""}> ${t("moodOnly")}</label>
+        <label class="feedback-check"><input name="daily" type="checkbox" ${feedback.daily ? "checked" : ""}> ${t("moreDaily")}</label>
+        <button class="button outline" type="submit" id="apply-feedback">${t("apply")}</button>
+        <p class="feedback-status" id="feedback-status" role="status"></p>
+      </form>
+    </section>
+    <section class="details-section"><h2>${t("lowTry")} · ${t(first)}</h2>
+      ${feedback.mood ? `<p class="trial-note">${t("moodSpace")}</p>` : ""}
+      ${feedback.daily ? `<p class="trial-note">${t("keepDaily")}</p>` : ""}
+      ${trialIdeas(preferred.style, first, safeCue)}
+    </section>
+    <section class="details-section"><h2>${t("inspiration")} · ${styleText(preferred.style).name}</h2>${inspiration(preferred.style, first, true)}</section>
     <div class="flow-actions report-actions"><button class="button outline" id="edit" type="button">${t("edit")}</button><button class="button outline" id="restart" type="button">${t("restart")}</button><a class="text-link" href="${pageHref("styles")}">${t("library")}</a></div>`;
+  get("feedback-form").addEventListener("submit", event => {
+    event.preventDefault();
+    const fields = event.currentTarget.elements;
+    feedback = { avoid: fields.avoid.value, mood: fields.mood.checked, daily: fields.daily.checked };
+    renderReport(true);
+  });
+  if (updated) {
+    get("apply-feedback").focus();
+    requestAnimationFrame(() => {
+      const status = get("feedback-status");
+      if (status) status.textContent = t("reranked");
+    });
+  }
   get("edit").addEventListener("click", () => {
     step = 1;
     navigate("quiz");
@@ -438,6 +544,7 @@ function renderReport() {
   get("restart").addEventListener("click", () => {
     step = 0;
     answers = [];
+    feedback = { avoid: "", mood: false, daily: false };
     navigate("quiz");
   });
 }
@@ -451,7 +558,7 @@ function renderCredits() {
     <ul class="elements">${Object.entries(fonts).map(([name, file]) => `<li><a href="${new URL("fonts/" + file + "-OFL.txt", siteRoot).href}">${name}</a></li>`).join("")}</ul>
     <div class="credit-list">${groups.filter(([id]) => styleImages[id]?.length).map(([id, name]) =>
       `<section><h2>${name}</h2><ul>${styleImages[id].map(img =>
-        `<li>${escapeHtml(img.title)} · ${imageCredit(img)}</li>`
+        `<li>${escapeHtml(img.title)} · ${imageCredit(img)}<br>${licenseDetails(img)}</li>`
       ).join("")}</ul></section>`
     ).join("")}</div>`;
 }
