@@ -215,7 +215,8 @@
 [data-emblem="angles"] { --emblem-shape: polygon(1% 19%, 44% 19%, 32% 44%, 56% 44%, 78% 3%, 100% 3%, 68% 64%, 49% 64%, 31% 99%, 7% 99%, 22% 64%, 0 64%); }
 
 [data-style="gothic"] .detail-opening { --panel: #2e2430; --ink: #f7eaf0; --muted: #decbd7; --accent: #e2b8ce; --stroke: #876e80; --print: #d7a5c621; }
-[data-style="gothic"] .cover-frame img { object-position: center 44%; }
+[data-style="gothic"] .cover-frame { height: auto; aspect-ratio: 3 / 4; }
+[data-style="gothic"] .cover-frame img { object-position: center 35%; }
 [data-style="baroque"] .cover-frame { border-radius: 50% 50% .2rem .2rem / 50% 50% .2rem .2rem; }
 [data-style="cyberpunk"] .detail-opening { --panel: #233239; --ink: #edf7f7; --muted: #ccdcdf; --accent: #b2dce4; --stroke: #73949c; --print: #a3e2e01d; }
 [data-style="pixel"] .cover-frame img { image-rendering: pixelated; }

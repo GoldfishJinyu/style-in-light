@@ -1,6 +1,8 @@
 "use strict";
 
 const altRows = `
+gothic-window-pinterest.jpg|幽暗石墙中的尖拱窗与窗外枯树林|A pointed Gothic window framing bare winter trees
+gothic-angel-pinterest.jpg|雾中墓园里的石雕天使与枯枝|A stone angel among bare branches in a foggy cemetery
 hero-1.jpg|画中的灰绿背景、瓶花与桌上的果实|Flowers in a vase and fruit on a table against a gray-green painted backdrop
 abi-1.jpg|黑带上密排的银色方铆钉|Silver square studs in close rows on black belts
 abi-2.jpg|黑皮夹克上的拉链、缝线和褶痕|Zips, seams and creases in a black leather jacket
