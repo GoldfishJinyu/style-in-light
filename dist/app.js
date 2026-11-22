@@ -1,168 +1,341 @@
 "use strict";
 
-const styles = {
-  minimal: {
-    name: "静物极简", keywords: "留白 · 柔光 · 细微质感",
-    intro: "少量颜色和清晰的轮廓，让材质、比例和光线自己说话。",
-    palette: ["#f2eee5", "#d9c8b4", "#a59f93", "#55594e"],
-    ideas: {
-      clothing: ["同色系叠穿", "用米白棉衫、浅灰直筒裤和哑光皮鞋叠出层次。保留一件有明显纹理的单品，让同色搭配更有变化。"],
-      objects: ["低矮的哑光陶杯", "找一只圆腹、无图案的矮陶杯，搭配亚麻杯垫。把桌面上常用的物件集中在一个浅色托盘里。"],
-      art: ["乔治·莫兰迪", "看他的《静物》，留意几只瓶瓶罐罐之间的距离，以及浅色表面被光线分成的层次。", "https://www.nga.gov/artworks/53527-still-life"],
-      places: ["纽约野口勇博物馆", "留意雕塑、自然光和庭院中的空隙。也可以在附近找一座有石材和安静中庭的美术馆。", "https://www.noguchi.org/museum/"]
-    }
-  },
-  earth: {
-    name: "大地慢调", keywords: "暖棕 · 天然材质 · 手作感",
-    intro: "暖色和有痕迹的表面，让熟悉的物件多一点时间感。",
-    palette: ["#e9d6b9", "#b66647", "#71633d", "#4f342b"],
-    ideas: {
-      clothing: ["亚麻与灯芯绒", "从烟棕、苔绿或陶土色里挑两种。试试松肩亚麻衬衫配灯芯绒裤，鞋包选有自然纹理的皮革或帆布。"],
-      objects: ["粗陶、木器和软织物", "挑一只保留手作纹理的宽口碗，搭配圆角胡桃木托盘。让灯光从布罩透出来，显出木纹和陶土的细节。"],
-      art: ["乔治亚·欧姬芙", "试着从她的新墨西哥州风景画里挑出三种泥土色，观察轮廓是怎样被简化的。", "https://www.okeeffemuseum.org/"],
-      places: ["阿比基乌的欧姬芙故居与工作室", "把土坯墙和沙漠色当作配色灵感。也可以在自己的城市找一家陶艺工作室，看看天然材质在不同光线下的样子。", "https://www.okeeffemuseum.org/homes/"]
-    }
-  },
-  color: {
-    name: "彩色游乐场", keywords: "撞色 · 曲线 · 表达欲",
-    intro: "大胆色块和带点幽默的轮廓，让平常的一天也有可以玩的地方。",
-    palette: ["#3043b3", "#d9422c", "#edb83d", "#f5e5d6"],
-    ideas: {
-      clothing: ["一主一辅的撞色", "试试钴蓝上衣配番茄红袜子或小包。用牛仔蓝或奶白留出间隔，让两种亮色都能看清。"],
-      objects: ["蘑菇灯与几何花器", "选一件有鲜明曲线的彩色物件，例如蘑菇灯或环形花器。把它放在素色书桌上，先看看一个色块能改变多少。"],
-      art: ["亨利·马蒂斯", "从马蒂斯的剪纸看起，留意蓝色、橙色和白色的形状怎么在画面里彼此拉开距离。", "https://www.moma.org/interactives/exhibitions/2014/matisse/the-cut-outs.html"],
-      places: ["尼斯马蒂斯博物馆", "沿着马蒂斯的作品找你喜欢的色彩组合。也可以在本地的设计市集或海报店找同样鲜明的图形。", "https://www.musee-matisse-nice.org/en/practical-information/"]
-    }
-  },
-  urban: {
-    name: "都市冷调", keywords: "利落 · 金属 · 结构",
-    intro: "干净的结构、冷色与反光表面，给日常造型一点俐落的张力。",
-    palette: ["#28262f", "#626c83", "#b6bdc5", "#e3dde7"],
-    ideas: {
-      clothing: ["清晰的剪裁", "用炭黑短外套、直线条长裤和银色配件组成一套。用深浅不同的灰分出层次，让衣服的结构更明显。"],
-      objects: ["拉丝金属与烟灰玻璃", "试一盏管状金属灯，或边缘清晰的烟灰玻璃托盘。搭配哑光织物来平衡反光的材质。"],
-      art: ["唐纳德·贾德", "找几件贾德的立体作品，看重复单元、边缘和空隙怎样改变你对整个空间的感受。", "https://www.moma.org/artists/2948-donald-judd"],
-      places: ["马尔法奇纳蒂基金会", "留意铝、混凝土和场地之间的关系。在本地也可以找由旧工厂改成的展览空间。", "https://chinati.org/about/mission-history/"]
-    }
-  }
+const copy = {
+  brand: ["美学坐标", "Aesthetic Coordinates"],
+  title: ["美学坐标 · 个人风格探索", "Aesthetic Coordinates · Find your style"],
+  subtitle: ["从穿搭、物件、艺术和音乐里，发现自己的风格。", "Find your style through clothing, objects, art and music."],
+  heroTop: ["找到你的", "Find your"],
+  heroBottom: ["美学坐标", "aesthetic."],
+  heroText: ["从性格和视觉偏好出发，看看哪些风格与你契合，再把灵感带进衣柜、房间和周末。", "Start with how you move through the world and what catches your eye. Then bring the styles that fit into your wardrobe, your room and your weekends."],
+  heroCaption: ["从历史服饰、日常材质和网络视觉中找灵感。", "Inspiration from dress history, everyday materials and online visual culture."],
+  quiz: ["开始风格测试", "Take the style quiz"],
+  resume: ["继续答题", "Continue the quiz"],
+  report: ["我的报告", "My report"],
+  library: ["风格图鉴", "Style library"],
+  libraryText: ["按时代、地区和风格类别探索。标签标的是主要灵感语境。", "Browse by era, region or collection. Labels describe each style’s main reference points."],
+  skip: ["跳到主要内容", "Skip to main content"],
+  navigation: ["主导航", "Main navigation"],
+  language: ["语言", "Language"],
+  light: ["浅色模式", "Light mode"],
+  dark: ["深色模式", "Dark mode"],
+  privacy: ["答题资料只在当前页面使用。", "Quiz answers stay on this page."],
+  credits: ["图片与字体来源", "Image and font credits"],
+  creditIntro: ["图片是风格参考，部分封面有裁切，文件已为网页缩放或压缩。原始语境、作者和许可请见源文件页面。", "Images are visual references. Files are resized or compressed for the web and cover previews may be cropped. See source pages for the original context, creator and licence."],
+  fontIntro: ["本地托管字体均采用 SIL 开放字体许可证。", "Self-hosted typefaces are distributed under the SIL Open Font License."],
+  creatorUnknown: ["作者见源文件", "Creator listed at source"],
+  publicDomain: ["公有领域", "Public domain"],
+  noResults: ["没有符合条件的风格，试试调整筛选。", "No styles match. Try changing the filters."],
+  found: ["种风格", "styles"],
+  search: ["搜索风格或元素", "Search styles or elements"],
+  searchHint: ["如 蝴蝶结、金属、哥特", "Try bows, metal or Gothic"],
+  era: ["时代", "Era"],
+  region: ["地区", "Region"],
+  collection: ["类别", "Collection"],
+  allEra: ["所有时代", "All eras"],
+  allRegion: ["所有地区", "All regions"],
+  allCollection: ["所有类别", "All collections"],
+  reset: ["清除筛选", "Clear filters"],
+  early: ["17–18 世纪", "17th–18th centuries"],
+  nineteenth: ["19 世纪", "19th century"],
+  mid: ["20 世纪中期", "Mid-20th century"],
+  late: ["20 世纪后期", "Late 20th century"],
+  millennium: ["千禧年前后", "Around the millennium"],
+  onlineEra: ["2010 年代至今", "2010s–present"],
+  today: ["当代", "Contemporary"],
+  europe: ["欧洲", "Europe"],
+  asia: ["东亚", "East Asia"],
+  america: ["北美", "North America"],
+  global: ["跨地区", "Cross-regional"],
+  history: ["历史风格", "Historical styles"],
+  subculture: ["亚文化", "Subcultures"],
+  digital: ["数字视觉", "Digital aesthetics"],
+  pop: ["流行穿搭", "Pop fashion"],
+  retro: ["复古灵感", "Vintage inspiration"],
+  design: ["生活与设计", "Living and design"],
+  online: ["网感标签", "Online style labels"],
+  startTitle: ["选择测试长度", "Choose your quiz length"],
+  startText: ["两种测试都会给出前三种风格。长测会多问一些材质、文化和细节偏好。", "Both quizzes give you three recommendations. The long quiz asks more about materials, cultural reference points and details."],
+  quick: ["短测", "Quick quiz"],
+  long: ["长测", "In-depth quiz"],
+  quickDetail: ["8 题 · 约 2 分钟", "8 questions · about 2 minutes"],
+  longDetail: ["16 题 · 约 5 分钟", "16 questions · about 5 minutes"],
+  aboutProfile: ["昵称用于称呼。年龄与性别可选，仅显示在当次报告中。", "Your name personalizes your report. Age and gender are optional and only appear in your current report."],
+  nickname: ["昵称（可选）", "Name (optional)"],
+  nicknameHint: ["想让报告怎么称呼你？", "What should we call you?"],
+  age: ["年龄段（可选）", "Age group (optional)"],
+  gender: ["性别（可选）", "Gender (optional)"],
+  skipField: ["暂不填写", "Prefer not to say"],
+  under18: ["18 岁以下", "Under 18"],
+  over45: ["45 岁及以上", "45 or older"],
+  woman: ["女性", "Woman"],
+  man: ["男性", "Man"],
+  nonbinary: ["非二元", "Non-binary"],
+  other: ["其他", "Other"],
+  begin: ["开始答题", "Start answering"],
+  home: ["返回首页", "Back to home"],
+  personality: ["性格与表达", "Personality and expression"],
+  visual: ["审美偏好", "Visual preferences"],
+  progress: ["问卷进度", "Quiz progress"],
+  unanswered: ["请先选择一个答案。", "Choose an answer to continue."],
+  backInfo: ["返回基本信息", "Back to profile"],
+  previous: ["上一题", "Previous"],
+  next: ["下一题", "Next"],
+  generate: ["生成风格报告", "See my results"],
+  reportName: ["的风格报告", "’s style report"],
+  reportTitle: ["你的风格报告", "Your style report"],
+  reportText: ["这三种风格最贴近你选出的颜色、材质、时代和表达方式。", "These three styles are the closest to your choices around color, texture, era and self-expression."],
+  reportWhy: ["你的选择中与这类风格相关的线索", "Cues from your answers that fit this style"],
+  reportMore: ["查看风格详情", "Explore the style"],
+  first: ["最贴近", "Closest match"],
+  second: ["第二推荐", "Second match"],
+  third: ["第三推荐", "Third match"],
+  restart: ["重新测试", "Start a new quiz"],
+  edit: ["修改答案", "Edit answers"],
+  backLibrary: ["返回风格图鉴", "Back to the library"],
+  backReport: ["返回我的报告", "Back to my results"],
+  elements: ["风格元素", "Style elements"],
+  palette: ["参考色板", "Reference palette"],
+  moodboard: ["图片参考", "Visual references"],
+  wardrobe: ["穿搭", "What to wear"],
+  objects: ["日常物件", "Everyday objects"],
+  artist: ["艺术与创作者", "Art and makers"],
+  place: ["地点与氛围", "Places and atmosphere"],
+  music: ["音乐推荐", "Music pairing"],
+  inspiration: ["把风格带进日常", "Bring the style into everyday life"]
 };
-
-const categories = {
-  clothing: "穿搭", objects: "日常物件", art: "艺术家", places: "地点"
-};
-const ages = ["暂不填写", "18 岁以下", "18–24 岁", "25–34 岁", "35–44 岁", "45 岁以上"];
-
-// Each answer pairs a visual or behavioral cue with one style family.
-const questions = [
-  { group: "性格与日常", title: "哪种周末最能让你充电？", options: [
-    ["独处一会儿，读书或整理房间", "minimal"], ["和熟悉的人做饭，慢慢聊天", "earth"],
-    ["约朋友去逛新的市集或展览", "color"], ["一个人出门，在城市里随意走走", "urban"]
-  ] },
-  { group: "性格与日常", title: "你希望自己的造型多引人注目？", options: [
-    ["越低调越自在", "minimal"], ["有亲切感，细节经得起看", "earth"],
-    ["我喜欢一眼就能被记住的造型", "color"], ["有辨识度，轮廓比颜色更重要", "urban"]
-  ] },
-  { group: "自我表达", title: "你最想用哪种方式表达自己？", options: [
-    ["用一个小细节，留一点想象空间", "minimal"], ["带一件有故事或亲手做的东西", "earth"],
-    ["试一组别人不太会选的配色", "color"], ["选一件剪裁鲜明的衣服建立气场", "urban"]
-  ] },
-  { group: "视觉偏好", title: "哪组颜色最先吸引你？", weight: 3, options: [
-    ["象牙白、雾灰、浅木色", "minimal"], ["陶土红、苔绿、暖棕", "earth"],
-    ["钴蓝、番茄红、明黄", "color"], ["炭黑、冷银、烟灰蓝", "urban"]
-  ] },
-  { group: "视觉偏好", title: "你最想伸手触摸哪种材质？", weight: 2, options: [
-    ["哑光细瓷与洗过的亚麻", "minimal"], ["粗陶与带清晰木纹的实木", "earth"],
-    ["有色玻璃和光滑亮釉", "color"], ["拉丝金属和烟灰玻璃", "urban"]
-  ] },
-  { group: "视觉偏好", title: "如果给桌上添一盏灯，你会选？", weight: 2, options: [
-    ["米白纸灯，光线柔和", "minimal"], ["圆鼓鼓的陶土灯座配布罩", "earth"],
-    ["橘红色蘑菇灯，关灯也好看", "color"], ["银色折臂灯，结构清晰", "urban"]
-  ] },
-  { group: "视觉偏好", title: "哪种空间最想让你多待一会儿？", weight: 2, options: [
-    ["阳光穿过纱帘的安静房间", "minimal"], ["有木桌、旧器皿和植物的厨房", "earth"],
-    ["家具像雕塑一样的彩色工作室", "color"], ["有混凝土和大窗的旧厂房展厅", "urban"]
-  ] },
-  { group: "生活场景", title: "你最想从哪里开始尝试新风格？", options: [
-    ["每天出门的穿搭", "clothing"], ["房间里常用的小物", "objects"],
-    ["想看的艺术作品", "art"], ["周末可以去的地方", "places"]
-  ] }
-];
 
 const get = id => document.getElementById(id);
-const answers = Array(questions.length).fill(null);
-const profile = { name: "", age: "暂不填写" };
+const saved = {
+  get(key) {
+    try { return localStorage.getItem("aesthetic-" + key); } catch { return null; }
+  },
+  set(key, value) {
+    try { localStorage.setItem("aesthetic-" + key, value); } catch { /* file and private browsing */ }
+  }
+};
+let locale = ["zh-Hans", "zh-Hant", "en"].includes(saved.get("locale")) ? saved.get("locale") : "zh-Hans";
+let theme = saved.get("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+const filterState = { search: "", era: "", region: "", collection: "" };
+const filters = {
+  era: "early nineteenth mid late millennium online today".split(" "),
+  region: "europe asia america global".split(" "),
+  collection: "history retro subculture pop design digital online".split(" ")
+};
+const profile = { name: "", age: "", gender: "", mode: "quick" };
+const ages = { "": "skipField", under18: "under18", "18–24": "18–24", "25–34": "25–34", "35–44": "35–44", over45: "over45" };
+const genders = { "": "skipField", woman: "woman", man: "man", nonbinary: "nonbinary", other: "other" };
+const fonts = { "DM Sans": "dm-sans", "DM Serif Display": "dm-serif-display", "Noto Serif SC": "noto-serif-sc", "Noto Serif TC": "noto-serif-tc" };
 let step = 0;
+let answers = [];
+
+function translate(pair) {
+  if (locale === "en") return pair[1];
+  return locale === "zh-Hant" ? toTraditional(pair[0]) : pair[0];
+}
+
+function t(key) {
+  return copy[key] ? translate(copy[key]) : key;
+}
+
+function styleText(style) {
+  if (locale === "en") return style.en;
+  if (locale === "zh-Hans") return style.zh;
+  return Object.fromEntries(Object.entries(style.zh).map(([key, value]) =>
+    [key, key === "music" ? value : toTraditional(value)]
+  ));
+}
+
+function questionText(question) {
+  if (locale === "en") return question.en;
+  return locale === "zh-Hant" ? question.zh.map(toTraditional) : question.zh;
+}
+
+function eraLabel(era) {
+  return t(era === "online" ? "onlineEra" : era);
+}
 
 function escapeHtml(value) {
-  return value.replace(/[&<>"']/g, character => ({
+  return String(value).replace(/[&<>"']/g, character => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[character]);
 }
 
-function calculateReport(answers) {
-  const scores = Object.fromEntries(Object.keys(styles).map(key => [key, 0]));
-  const signals = questions.slice(0, -1).map((question, index) => {
-    const [label, key] = question.options[answers[index]];
-    const weight = question.weight ?? 1;
-    scores[key] += weight;
-    return { label, key, weight };
-  });
-  // Prefer the explicit palette choice when totals tie.
-  const palettePreference = signals[3].key;
-  const ranked = Object.keys(scores).sort((a, b) =>
-    scores[b] - scores[a] || Number(b === palettePreference) - Number(a === palettePreference)
-  );
-  const [primary, alternative] = ranked;
-  const strongest = signals.filter(signal => signal.key === primary)
-    .sort((a, b) => b.weight - a.weight).slice(0, 2);
-  return {
-    primary, alternative: scores[alternative] ? alternative : null,
-    strongest, focus: questions.at(-1).options[answers.at(-1)][1]
-  };
+function quizLength() {
+  return profile.mode === "long" ? questions.length : shortLength;
 }
 
-function renderQuiz() {
+function finished() {
+  return answers.length === quizLength() && answers.every(Number.isInteger);
+}
+
+function picture(image, alt, extra = "") {
+  if (!image) return "";
+  return `<img ${extra} src="media/${image.file}" alt="${escapeHtml(alt)}" decoding="async">`;
+}
+
+function imageCredit(image) {
+  const license = image.license === "Public domain" ? t("publicDomain") : image.license;
+  const maker = image.author || t("creatorUnknown");
+  return `<a href="${escapeHtml(image.source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(maker)}</a> · ${
+    image.licenseUrl ? `<a href="${escapeHtml(image.licenseUrl)}" target="_blank" rel="noopener noreferrer">${license}</a>` : license
+  }`;
+}
+
+function imageDetails(image) {
+  const name = image.title.replace(/\.(jpe?g|png|webp)$/i, "");
+  return `<figure>${picture(image, name, 'loading="lazy"')}<figcaption><span>${escapeHtml(name)}</span><span>${imageCredit(image)}</span></figcaption></figure>`;
+}
+
+function palette(style) {
+  return `<div class="swatches" role="img" aria-label="${t("palette")}: ${style.palette.join(", ")}">${style.palette.map(color =>
+    `<span style="--swatch:${color}" title="${color}"></span>`
+  ).join("")}</div>`;
+}
+
+function renderFilters() {
+  const root = get("filters");
+  root.innerHTML = `
+    <label class="search-filter">${t("search")}<input type="search" name="search" placeholder="${t("searchHint")}"></label>
+    ${Object.entries(filters).map(([key, values]) => {
+      const label = key === "era" ? eraLabel : t;
+      const all = "all" + key[0].toUpperCase() + key.slice(1);
+      return `<label>${t(key)}<select name="${key}"><option value="">${t(all)}</option>
+        ${values.map(value => `<option value="${value}">${label(value)}</option>`).join("")}</select></label>`;
+    }).join("")}
+    <button class="button outline small" type="button" id="reset-filters">${t("reset")}</button>`;
+  for (const [key, value] of Object.entries(filterState)) root.elements.namedItem(key).value = value;
+  get("reset-filters").addEventListener("click", () => {
+    for (const key of Object.keys(filterState)) filterState[key] = "";
+    root.reset();
+    renderLibrary();
+  });
+}
+
+function renderLibrary() {
+  const term = filterState.search.trim().toLocaleLowerCase();
+  const visible = catalog.filter(style => {
+    if (Object.keys(filters).some(key => filterState[key] && filterState[key] !== style[key])) return false;
+    if (!term) return true;
+    const fields = [style.zh.name, style.zh.elements, style.en.name, style.en.elements];
+    return fields.concat(fields.slice(0, 2).map(toTraditional)).some(field => field.toLocaleLowerCase().includes(term));
+  });
+  get("count").textContent = visible.length ? `${visible.length} ${t("found")}` : t("noResults");
+  get("style-grid").innerHTML = visible.map(style => {
+    const text = styleText(style);
+    return `<a class="style-card" href="#style-${style.id}">
+      <div class="card-image">${picture(styleImages[style.id]?.[0], "", 'loading="lazy"')}</div>
+      <div class="card-copy"><span class="card-category">${eraLabel(style.era)} · ${t(style.region)}</span><h3>${text.name}</h3><p>${text.elements.split(locale === "en" ? ", " : "、").slice(0, 3).join(" · ")}</p></div>
+    </a>`;
+  }).join("");
+}
+
+function renderTheme() {
+  document.documentElement.dataset.theme = theme;
+  document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#24231f" : "#f4f0e8";
+  const label = t(theme === "light" ? "dark" : "light");
+  get("theme").textContent = theme === "light" ? "☾" : "☀";
+  get("theme").setAttribute("aria-label", label);
+  get("theme").title = label;
+}
+
+function renderChrome() {
+  document.documentElement.lang = locale;
+  document.title = t("title");
+  document.querySelector('meta[name="description"]').content = t("subtitle");
+  renderTheme();
+  document.querySelector("nav").setAttribute("aria-label", t("navigation"));
+  get("brand").textContent = t("brand");
+  get("skip").textContent = t("skip");
+  get("locale-label").textContent = t("language");
+  get("locale").value = locale;
+  get("nav-library").textContent = t("library");
+  get("nav-quiz").textContent = t(finished() ? "report" : step ? "resume" : "quiz");
+  get("nav-quiz").href = finished() ? "#report" : "#quiz";
+  const image = styleImages.hero?.[0];
+  get("hero").innerHTML = `
+    <div class="hero-copy">
+      <h1>${t("heroTop")}<br><em>${t("heroBottom")}</em></h1>
+      <p class="lede">${t("heroText")}</p>
+      <div class="hero-actions"><a class="button" id="hero-quiz" href="#quiz">${t("quiz")}</a><a class="text-link" href="#styles">${t("library")}</a></div>
+    </div>
+    <figure class="hero-art">
+      ${picture(image, "", 'fetchpriority="high"')}
+      <figcaption><span>${t("heroCaption")}</span>${image ? `<span>${imageCredit(image)}</span>` : ""}</figcaption>
+    </figure>`;
+  get("library-head").innerHTML = `<h2 id="library-title" tabindex="-1">${t("library")}</h2><p>${t("libraryText")}</p>`;
+  get("footer").innerHTML = `<a class="brand" href="#home">${t("brand")}</a><p>${t("privacy")}</p><a class="text-link" href="#credits">${t("credits")}</a>`;
+  renderFilters();
+  renderLibrary();
+  updateQuizLinks();
+}
+
+function updateQuizLinks() {
+  const complete = finished();
+  for (const id of ["nav-quiz", "hero-quiz"]) {
+    get(id).textContent = t(complete ? "report" : step ? "resume" : "quiz");
+    get(id).href = complete ? "#report" : "#quiz";
+  }
+}
+
+function rememberProfile(form) {
+  const data = new FormData(form);
+  profile.name = String(data.get("name") || "").trim();
+  profile.age = String(data.get("age") || "");
+  profile.gender = String(data.get("gender") || "");
+  profile.mode = String(data.get("mode") || "quick");
+}
+
+function options(values, selected) {
+  return Object.entries(values).map(([value, label]) =>
+    `<option value="${value}" ${value === selected ? "selected" : ""}>${t(label)}</option>`
+  ).join("");
+}
+
+function renderQuiz(focus = true) {
   const root = get("quiz-content");
   if (step === 0) {
     root.innerHTML = `
-      <p class="eyebrow">风格测试</p>
-      <h1 tabindex="-1">先认识一下你</h1>
-      <p>昵称和年龄段都可以跳过。年龄段仅用于记录这次作答，风格根据你的偏好推荐。</p>
+      <h1 tabindex="-1">${t("startTitle")}</h1><p class="subtle">${t("startText")}</p>
       <form id="profile-form">
+        <fieldset class="mode-options"><legend class="sr-only">${t("startTitle")}</legend>
+          ${["quick", "long"].map(mode =>
+            `<label class="option mode-option"><input type="radio" name="mode" value="${mode}" ${profile.mode === mode ? "checked" : ""}><span><strong>${t(mode)}</strong><small>${t(mode + "Detail")}</small></span></label>`
+          ).join("")}
+        </fieldset>
+        <p class="profile-note">${t("aboutProfile")}</p>
         <div class="fields">
-          <label for="nickname">昵称<input id="nickname" name="nickname" maxlength="24" autocomplete="nickname" placeholder="想让报告怎么称呼你？"></label>
-          <label for="age">年龄段<select id="age" name="age">${ages.map(age => `<option>${age}</option>`).join("")}</select></label>
+          <label>${t("nickname")}<input name="name" autocomplete="nickname" value="${escapeHtml(profile.name)}" maxlength="24" placeholder="${t("nicknameHint")}"></label>
+          <label>${t("age")}<select name="age">${options(ages, profile.age)}</select></label>
+          <label>${t("gender")}<select name="gender">${options(genders, profile.gender)}</select></label>
         </div>
-        <div class="flow-actions"><a class="text-link" href="#home">返回首页</a><button class="button" type="submit">开始答题</button></div>
+        <div class="flow-actions"><a class="text-link" href="#home">${t("home")}</a><button class="button" type="submit">${t("begin")}</button></div>
       </form>`;
-    get("nickname").value = profile.name;
-    get("age").value = profile.age;
-    get("profile-form").addEventListener("submit", event => {
+    const form = get("profile-form");
+    form.addEventListener("input", () => rememberProfile(form));
+    form.addEventListener("submit", event => {
       event.preventDefault();
-      profile.name = get("nickname").value.trim();
-      profile.age = get("age").value;
+      rememberProfile(form);
+      if (answers.length !== quizLength()) answers = Array(quizLength()).fill(null);
       step = 1;
       renderQuiz();
     });
   } else {
     const index = step - 1;
     const question = questions[index];
+    const [title, ...choices] = questionText(question);
     root.innerHTML = `
-      <div class="question-top"><p class="eyebrow">${question.group}</p><span>第 ${step} / ${questions.length} 题</span></div>
-      <progress aria-label="问卷进度" value="${step}" max="${questions.length}"></progress>
-      <h1 id="question-title" tabindex="-1">${question.title}</h1>
+      <div class="question-top"><span>${t(question.group)}</span><span>${step} / ${quizLength()}</span></div>
+      <progress aria-label="${t("progress")}" value="${step}" max="${quizLength()}"></progress>
+      <h1 tabindex="-1">${title}</h1>
       <form id="question-form">
-        <fieldset>
-          <legend class="sr-only">${question.title}</legend>
-          ${question.options.map(([label], i) => `
-            <label class="option"><input type="radio" name="answer" value="${i}" ${answers[index] === i ? "checked" : ""}> ${label}</label>
-          `).join("")}
+        <fieldset class="question-options"><legend class="sr-only">${title}</legend>
+          ${choices.map((choice, value) =>
+            `<label class="option"><input type="radio" name="answer" value="${value}" ${answers[index] === value ? "checked" : ""}><span>${choice}</span></label>`
+          ).join("")}
         </fieldset>
-        <p id="answer-error" class="validation" role="alert" hidden>请先选择一个答案。</p>
-        <div class="flow-actions">
-          <button id="prev" class="button outline" type="button">${step === 1 ? "返回基本信息" : "上一题"}</button>
-          <button class="button" type="submit">${step === questions.length ? "生成风格报告" : "下一题"}</button>
-        </div>
+        <p class="validation" id="answer-error" role="alert" hidden>${t("unanswered")}</p>
+        <div class="flow-actions"><button id="previous" class="button outline" type="button">${t(step === 1 ? "backInfo" : "previous")}</button>
+          <button class="button" type="submit">${t(step === quizLength() ? "generate" : "next")}</button></div>
       </form>`;
     const form = get("question-form");
     form.addEventListener("change", event => {
@@ -171,122 +344,134 @@ function renderQuiz() {
     });
     form.addEventListener("submit", event => {
       event.preventDefault();
-      if (answers[index] === null) {
+      if (!Number.isInteger(answers[index])) {
         get("answer-error").hidden = false;
         form.querySelector("input").focus();
-        return;
+      } else if (step === quizLength()) {
+        if (location.hash === "#report") route();
+        else location.hash = "report";
+      } else {
+        step++;
+        renderQuiz();
       }
-      if (step === questions.length) {
-        location.hash = "report";
-        return;
-      }
-      step++;
-      renderQuiz();
     });
-    get("prev").addEventListener("click", () => {
+    get("previous").addEventListener("click", () => {
       step--;
       renderQuiz();
     });
   }
-  root.querySelector("h1").focus();
+  if (focus) root.querySelector("h1").focus({ preventScroll: true });
 }
 
-function feature(key, title, eyebrow, reason = "") {
-  const style = styles[key];
-  return `<div class="feature">
-    <div class="feature-copy">
-      <p class="eyebrow">${eyebrow}</p>
-      <h1 tabindex="-1">${title}</h1>
-      <p>${style.intro}</p>
-      <div class="swatches" role="img" aria-label="${style.name}示例色板">${style.palette.map(color => `<span style="background:${color}"></span>`).join("")}</div>
-      ${reason ? `<p class="reason">${reason}</p>` : ""}
-    </div>
-    <div class="mood ${key}" role="img" aria-label="${style.name}风格静物图"></div>
-  </div>`;
+function inspiration(text) {
+  const labels = { wardrobe: "outfit", objects: "objects", artist: "art", place: "place", music: "music" };
+  return `<div class="details-grid">${Object.entries(labels).map(([key, field]) =>
+    `<article class="${key === "music" ? "music" : ""}"><h3>${t(key)}</h3><p>${text[field]}</p></article>`
+  ).join("")}</div>`;
 }
 
-function inspiration(style, focus) {
-  const order = Object.keys(categories).filter(key => key !== focus);
-  if (focus) order.unshift(focus);
-  return `<section class="results-section" aria-labelledby="inspiration-title">
-    <h2 id="inspiration-title">把风格带进日常</h2>
-    <div class="details-grid">${order.map(key => {
-      const [name, description, url] = style.ideas[key];
-      return `<article><h3>${categories[key]}</h3><strong>${url ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${name}</a>` : name}</strong><p>${description}</p></article>`;
-    }).join("")}</div>
-  </section>`;
+function renderDetail(style) {
+  const text = styleText(style);
+  const images = styleImages[style.id] || [];
+  get("detail-content").innerHTML = `
+    <div class="back-links"><a class="text-link" href="#styles">${t("backLibrary")}</a>${finished() ? `<a class="text-link" href="#report">${t("backReport")}</a>` : ""}</div>
+    <section class="feature">
+      <div class="feature-copy"><p class="overline">${eraLabel(style.era)} · ${t(style.region)} · ${t(style.collection)}</p>
+        <h1 tabindex="-1">${text.name}</h1><p class="lede">${text.description}</p>${palette(style)}
+      </div>
+      <div class="feature-image">${picture(images[0], "", 'fetchpriority="high"')}</div>
+    </section>
+    <section class="details-section"><h2>${t("elements")}</h2>
+      <ul class="elements">${text.elements.split(locale === "en" ? ", " : "、").map(element => `<li>${element}</li>`).join("")}</ul>
+    </section>
+    <section class="details-section"><h2>${t("inspiration")}</h2>${inspiration(text)}</section>
+    ${images.length ? `<section class="details-section"><h2>${t("moodboard")}</h2><div class="moodboard">${images.map(imageDetails).join("")}</div></section>` : ""}`;
 }
 
 function renderReport() {
-  const { primary, alternative, strongest, focus } = calculateReport(answers);
-  const style = styles[primary];
-  const heading = profile.name ? `${escapeHtml(profile.name)}的风格报告` : "你的风格报告";
-  const evidence = strongest.map(signal => `「${signal.label}」`).join("、");
-  const ageNote = profile.age === ages[0] ? "" : `<p class="micro">填写的年龄段 · ${profile.age}</p>`;
+  const rank = rankStyles(answers);
+  const name = profile.name ? escapeHtml(profile.name) + t("reportName") : t("reportTitle");
+  const details = [profile.age && t(ages[profile.age]), profile.gender && t(genders[profile.gender])].filter(Boolean).join(" · ");
+  const markers = ["first", "second", "third"];
   get("report-content").innerHTML = `
-    ${feature(primary, style.name, heading, `你的选择 ${evidence} 与这种风格最接近。可以先从「${categories[focus]}」试一试。`)}
-    ${ageNote}
-    ${alternative ? `<p class="second">还可以探索 <a href="#style-${alternative}">${styles[alternative].name}</a> · ${styles[alternative].keywords}</p>` : ""}
-    ${inspiration(style, focus)}
-    <div class="flow-actions report-actions">
-      <button class="button outline" id="edit-answers" type="button">修改答案</button>
-      <button class="button outline" id="restart" type="button">重新测试</button>
-      <a class="text-link" href="#styles">浏览风格图鉴</a>
-    </div>`;
-  get("edit-answers").addEventListener("click", () => {
+    <header class="report-head"><h1 tabindex="-1">${name}</h1><p class="lede">${t("reportText")}</p>${details ? `<p class="profile-note">${details}</p>` : ""}</header>
+    <div class="report-grid">${rank.map(({ style, reasons }, index) => {
+      const text = styleText(style);
+      return `<article class="recommendation">
+        <div class="card-image">${picture(styleImages[style.id]?.[0], "", 'loading="lazy"')}</div>
+        <div class="recommendation-copy"><p class="overline">${t(markers[index])}</p><h2>${text.name}</h2><p>${text.description}</p>
+          ${palette(style)}
+          ${reasons.length ? `<p class="reason"><strong>${t("reportWhy")}</strong><br>${reasons.map(({ question, choice }) => questionText(question)[choice + 1]).join(" · ")}</p>` : ""}
+          <a class="text-link" href="#style-${style.id}">${t("reportMore")}</a></div></article>`;
+    }).join("")}</div>
+    <section class="details-section"><h2>${t("inspiration")} · ${styleText(rank[0].style).name}</h2>${inspiration(styleText(rank[0].style))}</section>
+    <div class="flow-actions report-actions"><button class="button outline" id="edit" type="button">${t("edit")}</button><button class="button outline" id="restart" type="button">${t("restart")}</button><a class="text-link" href="#styles">${t("library")}</a></div>`;
+  get("edit").addEventListener("click", () => {
     step = 1;
     location.hash = "quiz";
   });
   get("restart").addEventListener("click", () => {
-    profile.name = "";
-    profile.age = ages[0];
-    answers.fill(null);
     step = 0;
+    answers = [];
     location.hash = "quiz";
   });
 }
 
-function route() {
-  const page = location.hash.slice(1);
-  if (page === "main") return;
-  const key = page.startsWith("style-") ? page.slice(6) : "";
-  const detail = Object.hasOwn(styles, key);
-  const complete = answers.every(answer => answer !== null);
-  const report = page === "report" && complete;
-  const quiz = page === "quiz" || (page === "report" && !complete);
-  get("home-view").hidden = quiz || report || detail;
-  get("quiz-view").hidden = !quiz;
-  get("report-view").hidden = !report;
-  get("detail-view").hidden = !detail;
-  get("nav-quiz").textContent = complete ? "我的报告" : "开始测试";
-  get("nav-quiz").href = complete ? "#report" : "#quiz";
+function renderCredits() {
+  const groups = [["hero", t("brand")], ...catalog.map(style => [style.id, styleText(style).name])];
+  get("credits-content").innerHTML = `
+    <a class="text-link back-links" href="#home">${t("home")}</a>
+    <h1 tabindex="-1">${t("credits")}</h1><p class="lede">${t("creditIntro")}</p>
+    <p class="lede">${t("fontIntro")}</p>
+    <ul class="elements">${Object.entries(fonts).map(([name, file]) => `<li><a href="fonts/${file}-OFL.txt">${name}</a></li>`).join("")}</ul>
+    <div class="credit-list">${groups.filter(([id]) => styleImages[id]?.length).map(([id, name]) =>
+      `<section><h2>${name}</h2><ul>${styleImages[id].map(img =>
+        `<li>${escapeHtml(img.title)} · ${imageCredit(img)}</li>`
+      ).join("")}</ul></section>`
+    ).join("")}</div>`;
+}
 
-  if (quiz) {
-    renderQuiz();
-  } else if (report) {
-    renderReport();
-    get("report-content").querySelector("h1").focus();
-  } else if (detail) {
-    const style = styles[key];
-    const back = complete ? '<a class="text-link back-link" href="#report">返回我的报告</a>' : "";
-    get("detail-content").innerHTML = `
-      <a class="text-link back-link" href="#styles">返回风格图鉴</a> ${back}
-      ${feature(key, style.name, style.keywords)}
-      ${inspiration(style)}
-      <div class="flow-actions"><a class="button" href="#quiz">测测我的风格</a></div>`;
-    get("detail-content").querySelector("h1").focus();
-  }
-  if (page === "styles") {
-    get("styles").scrollIntoView();
+function route({ focus = true, scroll = true } = {}) {
+  const hash = location.hash.slice(1);
+  if (hash === "main") return;
+  const style = hash.startsWith("style-") && catalog.find(item => item.id === hash.slice(6));
+  let page = "home";
+  if (style) page = "detail";
+  else if (hash === "report") page = finished() ? "report" : "quiz";
+  else if (hash === "quiz") page = "quiz";
+  else if (hash === "credits") page = "credits";
+  for (const name of ["home", "detail", "report", "quiz", "credits"]) get(name + "-view").hidden = name !== page;
+  updateQuizLinks();
+  if (page === "detail") renderDetail(style);
+  if (page === "quiz") renderQuiz(false);
+  if (page === "report") renderReport();
+  if (page === "credits") renderCredits();
+  if (hash === "styles") {
+    if (focus) get("library-title").focus({ preventScroll: true });
+    if (scroll) get("styles").scrollIntoView();
   } else {
-    window.scrollTo(0, 0);
+    if (focus && page !== "home") get(page + "-view").querySelector("h1").focus({ preventScroll: true });
+    if (scroll) window.scrollTo(0, 0);
   }
 }
 
-get("style-grid").innerHTML = Object.entries(styles).map(([key, style]) => `
-  <a class="style-card" href="#style-${key}">
-    <span class="mood ${key}" aria-hidden="true"></span>
-    <span class="card-copy"><strong>${style.name}</strong><span>${style.keywords}</span></span>
-  </a>`).join("");
-window.addEventListener("hashchange", route);
+get("filters").addEventListener("submit", event => event.preventDefault());
+get("filters").addEventListener("input", event => {
+  if (!Object.hasOwn(filterState, event.target.name)) return;
+  filterState[event.target.name] = event.target.value;
+  renderLibrary();
+});
+get("locale").addEventListener("change", event => {
+  locale = event.target.value;
+  saved.set("locale", locale);
+  renderChrome();
+  route({ focus: false, scroll: false });
+});
+get("theme").addEventListener("click", () => {
+  theme = theme === "dark" ? "light" : "dark";
+  saved.set("theme", theme);
+  renderTheme();
+});
+window.addEventListener("hashchange", () => route());
+renderChrome();
 route();
