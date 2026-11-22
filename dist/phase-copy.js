@@ -74,6 +74,8 @@ const phaseCopy = {
   moodSpace: ["先在空间和物件里试这个氛围。", "Start with this mood in a space or an object."],
   chosenCue: ["可以先借用", "A cue to borrow"],
   imagePending: ["图片许可待核实", "Image licence pending"],
+  imageSource: ["图片来源", "Image source"],
+  licenseUnknown: ["许可未核实", "Licence unverified"],
   originalImage: ["原始文件", "Original file"],
   checked: ["核对日期", "Checked"],
   creditRequired: ["署名并附原出处与许可链接，注明修改。", "Credit the creator, link the source and licence, and note modifications."],

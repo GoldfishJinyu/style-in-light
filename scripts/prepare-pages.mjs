@@ -16,7 +16,7 @@ if (process.env.PAGES_STAGE_DIR) {
     filter(path) {
       if (dirname(path) !== mediaPath) return true;
       const record = licenses[basename(path)];
-      return Boolean(record && record.permissionStatus !== "unverified");
+      return Boolean(record && (record.displayApproved || record.permissionStatus !== "unverified"));
     }
   });
   dist = pathToFileURL(join(outputPath, ".") + "/");

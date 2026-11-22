@@ -168,7 +168,9 @@ function verifiedImage(image) {
 }
 
 function picture(image, extra = "") {
-  if (!verifiedImage(image)) return `<span class="image-placeholder">${t("imagePending")}</span>`;
+  if (!verifiedImage(image) && !imageLicenses[image?.file]?.displayApproved) {
+    return `<span class="image-placeholder">${t("imagePending")}</span>`;
+  }
   const alt = imageAlts[image.file] ? translate(imageAlts[image.file]) : image.title;
   return `<img ${extra} src="${new URL("media/" + image.file, siteRoot).href}" alt="${escapeHtml(alt)}" decoding="async">`;
 }
@@ -177,7 +179,8 @@ function imageCredit(image) {
   const record = imageLicenses[image?.file];
   if (!record) return t("imagePending");
   if (!verifiedImage(image)) {
-    return `<a href="${escapeHtml(record.source)}" target="_blank" rel="noopener noreferrer">${t("imagePending")}</a>`;
+    const label = record.displayApproved ? t("imageSource") : t("imagePending");
+    return `<a href="${escapeHtml(record.source)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
   }
   const license = record.license === "Public domain" ? t("publicDomain") : record.license;
   const maker = record.author || t("creatorUnknown");
@@ -188,6 +191,7 @@ function imageCredit(image) {
 
 function licenseDetails(image) {
   const record = imageLicenses[image.file];
+  if (record?.displayApproved && !verifiedImage(image)) return `<span>${t("licenseUnknown")}</span>`;
   return verifiedImage(image) ? `<span><a href="${escapeHtml(record.original)}" target="_blank" rel="noopener noreferrer">${t("originalImage")}</a> · ${t("checked")} <time datetime="${record.checked}">${record.checked}</time><br>${t(record.attribution)}</span>` : "";
 }
 
