@@ -427,34 +427,46 @@ function relatedStyle(style, feature) {
 function renderDetail(style) {
   const text = styleText(style);
   const images = styleImages[style.id] || [];
+  const theme = detailThemes[style.id];
+  const active = document.documentElement.style;
+  active.setProperty("--guide-light", theme.light);
+  active.setProperty("--guide-dark", theme.dark);
+  active.setProperty("--guide-paper", theme.paper);
   const feature = featuredGuides[style.id];
   const definition = feature?.background || workingDefinitions[style.id];
   const definitionText = definition ? translate(definition) : text.description;
   const source = feature?.source;
   const sourceText = feature?.sourceNote ? translate(feature.sourceNote) : t("sourceEntry");
   get("detail-content").innerHTML = `
-    <div class="detail-theme" data-style="${style.id}" data-motif="${feature?.theme || style.collection}">
+    <article class="detail-theme" data-style="${style.id}" data-layout="${theme.layout}" data-emblem="${theme.emblem}">
     <div class="back-links"><a class="text-link" href="${pageHref("styles")}">${t("backLibrary")}</a>${finished() ? `<a class="text-link" href="${pageHref("report")}">${t("backReport")}</a>` : ""}</div>
-    <section class="feature">
-      <div class="feature-copy"><p class="overline">${eraLabel(style.era)} · ${t(style.region)} · ${t(style.collection)}</p>
-        <h1 tabindex="-1">${text.name}</h1><p class="lede">${text.description}</p>${palette(style.palette)}
-      </div>
-      <div class="feature-image">${picture(images[0], 'fetchpriority="high"')}</div>
+    <section class="detail-opening" aria-labelledby="detail-title">
+      <div class="emblem-stage" aria-hidden="true"><i></i><i></i><i></i></div>
+      <header class="detail-heading">
+        <p class="overline">${t(style.collection)} · ${eraLabel(style.era)} · ${t(style.region)}</p>
+        <h1 id="detail-title" tabindex="-1">${text.name}</h1><p class="lede">${text.description}</p>
+      </header>
+      <figure class="detail-cover">
+        <div class="cover-frame">${picture(images[0], 'fetchpriority="high"')}</div>
+        ${images[0] ? `<figcaption>${imageCredit(images[0])}</figcaption>` : ""}
+      </figure>
+      <div class="detail-palette"><p>${t("palette")}</p>${palette(style.palette)}</div>
     </section>
-    <section class="details-section guide-overview"><h2>${t("about")}</h2><p>${definitionText}</p>${detailTags(style)}</section>
-    <section class="details-section"><h2>${t("elements")}</h2>
+    <div class="guide-chapters">
+    <section class="details-section guide-overview chapter"><h2>${t("about")}</h2><p>${definitionText}</p>${detailTags(style)}</section>
+    <section class="details-section guide-elements chapter"><h2>${t("elements")}</h2>
       <ul class="elements">${text.elements.split(locale === "en" ? ", " : "、").map(element => `<li>${element}</li>`).join("")}</ul>
     </section>
-    <section class="details-section"><h2>${t("neighbor")}</h2>${relatedStyle(style, feature)}</section>
-    <section class="details-section starter"><h2>${t("lowTry")}</h2><p>${feature ? translate(feature.starter) : text.outfit + " " + t("wearSmall")}</p></section>
-    <section class="details-section"><h2>${t("inspiration")}</h2>${inspiration(style)}</section>
-    ${images.length ? `<section class="details-section"><h2>${t("moodboard")}</h2><div class="moodboard">${images.map(imageDetails).join("")}</div></section>` : ""}
-    <section class="details-section"><h2>${t("source")}</h2><p class="subtle">${t("editorial")}</p>
+    <section class="details-section guide-neighbor chapter"><h2>${t("neighbor")}</h2>${relatedStyle(style, feature)}</section>
+    <section class="details-section starter chapter"><h2>${t("lowTry")}</h2><p>${feature ? translate(feature.starter) : text.outfit + " " + t("wearSmall")}</p></section>
+    <section class="details-section guide-inspiration chapter"><h2>${t("inspiration")}</h2>${inspiration(style)}</section>
+    ${images.length ? `<section class="details-section guide-photos chapter"><h2>${t("moodboard")}</h2><div class="moodboard">${images.map(imageDetails).join("")}</div></section>` : ""}
+    <section class="details-section guide-sources chapter"><h2>${t("source")}</h2><p class="subtle">${t("editorial")}</p>
       ${source ? `<p><a href="${source}" target="_blank" rel="noopener noreferrer">${sourceText}</a></p>` : ""}
       <ul class="source-links">${images.filter(image => imageLicenses[image.file]).map(image =>
         `<li><a href="${escapeHtml(imageLicenses[image.file].source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(image.title)}</a></li>`
       ).join("")}</ul>
-    </section></div>`;
+    </section></div></article>`;
 }
 
 function trialIdeas(style, first, cue) {

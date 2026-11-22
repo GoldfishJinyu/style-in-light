@@ -80,7 +80,7 @@ for (const style of catalog) {
 
 const featuredGuides = {
   gothic: {
-    theme: "arch", neighbor: "baroque",
+    neighbor: "baroque",
     background: ["本图鉴用「哥特」指当代哥特穿搭与常被借用的历史视觉元素。中世纪哥特建筑的尖拱、彩窗和石饰是视觉参考；当代暗色穿搭是一套独立的文化语境。", "Here Gothic means contemporary goth dress and the historical visual cues it sometimes borrows. Pointed arches, stained glass and carved stone are architectural references, in a different context from the modern dark wardrobe."],
     difference: ["两者都有戏剧性的明暗。哥特可从窄长线条、黑蕾丝和冷银入手；巴洛克更常用暖金、厚重曲线和集中光线。", "Both use dramatic light and shade. Goth styling can start with length, black lace and cool silver; Baroque references lean toward warm gilt, heavy curves and concentrated light."],
     starter: ["给现有黑上衣加一个窄蕾丝领片，或把深色玻璃杯放到浅木桌面；先比较材质在日光下的效果。", "Add a narrow lace collar to a black top you own, or put a smoked-glass tumbler on a light wood table. Notice how the textures look in daylight."],
@@ -88,7 +88,7 @@ const featuredGuides = {
     source: "https://www.vam.ac.uk/collections/gothic"
   },
   rococo: {
-    theme: "scallop", neighbor: "coquette",
+    neighbor: "coquette",
     background: ["洛可可与十八世纪欧洲装饰艺术有关。轻巧曲线和贝壳纹样常出现在室内及工艺品中；同一时期的法式长袍还可以用来观察有结构的裙幅。", "Rococo is associated with eighteenth-century European decorative arts. Light curves and shell-like ornament appear in interiors and objects. Period French gowns also offer a reference for structured width."],
     difference: ["两种都可用蝴蝶结；洛可可会让曲线、花边和层次贯穿整体，Coquette Girl 更适合只保留一两处缎带或芭蕾细节。", "Both use bows. Rococo carries curves, ornament and layering through a composition; Coquette Girl can concentrate the effect in one or two ribbon or ballet details."],
     starter: ["把浅色餐盘换成一只贝壳边小碟，或给素色上衣加一条细缎带。用一处弯曲细节就能试出效果。", "Try a scalloped dish in place of a plain one, or add one ribbon to a solid top. One curved detail is enough to test the effect."],
@@ -96,7 +96,7 @@ const featuredGuides = {
     source: "https://www.metmuseum.org/art/collection/search/159498"
   },
   mori: {
-    theme: "stitch", neighbor: "earth",
+    neighbor: "earth",
     background: ["这里把「森系」用作日系森林感穿搭的视觉标签，重点是自然织物、柔和叠穿和仿佛能融入林间的色彩。", "Here Mori Kei describes a Japanese woodland-inspired silhouette built from natural weaves, soft layers and colors that settle into a forest palette."],
     difference: ["两者都喜欢天然材质。森系主要通过长短层次和轻软织物形成轮廓；大地慢调更多从陶土、木纹和暖光构建室内气氛。", "Both favor natural materials. Mori builds a silhouette with garment lengths and soft cloth; Earth Tones builds an interior mood with clay, wood grain and warm light."],
     starter: ["保留平常的鞋，把亚麻衬衫搭在原有针织衫外。空间里可先用一块未漂白的亚麻桌布。", "Keep your everyday shoes and layer a linen shirt over a knit you own. In a room, start with a piece of unbleached linen."],
@@ -104,7 +104,7 @@ const featuredGuides = {
     // The woodland photograph is illustrative. No external history claim is made for this label.
   },
   cyberpunk: {
-    theme: "grid", neighbor: "urban",
+    neighbor: "urban",
     background: ["这里从赛博朋克影视中的未来城市出发，采用暴露的技术结构、人工光和不平整的城市质感做视觉参考。街景照片用于观察光色和空间。", "This interpretation starts with futuristic cities in cyberpunk film: exposed technology, artificial light and uneven urban textures. The street photos are references for light and space."],
     difference: ["两者都能用冷色和金属。都市冷调侧重干净剪裁与单一色系；赛博朋克会加入反光光源、网面或可见的扣件。", "Both can use cool colors and metal. Urban Cool emphasizes clean cuts and a narrow palette; Cyberpunk adds reflected light, mesh or visible fasteners."],
     starter: ["在炭灰外套上加一根反光细绳，或给桌灯下的深色托盘加一件拉丝金属小物。", "Add a thin reflective cord to a charcoal jacket, or put a brushed-metal object on a dark tray under a desk lamp."],
@@ -112,7 +112,7 @@ const featuredGuides = {
     source: "https://www.bfi.org.uk/features/where-begin-japanese-cyberpunk"
   },
   coquette: {
-    theme: "ribbon", neighbor: "soft-girl",
+    neighbor: "soft-girl",
     background: ["本图鉴用这个网络穿搭标签描述把缎带、蝴蝶结、珍珠和芭蕾细节拆进日常造型的做法。古典芭蕾美术仅作为视觉联想。", "This online style label covers everyday outfits with ribbons, bows, pearls and ballet details. Ballet art is included as a visual association."],
     difference: ["同样能用浅粉色。Coquette Girl 借缎带、鞋带和细蕾丝组织细节；Soft Girl 更依靠淡色块、软面织物和小发夹。", "Both can use pale pink. Coquette Girl builds on ribbons, lacing and fine lace; Soft Girl leans on soft fabrics, pastel color blocks and small clips."],
     starter: ["先把细缎带系在一只旧包的提手上。想尝试穿搭时，用中性配色让缎带成为唯一重点。", "Tie a narrow ribbon to an existing bag handle. For an outfit, use a neutral palette and make the ribbon the single focal point."],
@@ -121,7 +121,7 @@ const featuredGuides = {
     sourceNote: ["大都会艺术博物馆的德加作品介绍，用于理解芭蕾的视觉参考。", "The Met’s Degas entry provides context for the ballet imagery."]
   },
   minimalism: {
-    theme: "rule", neighbor: "minimal",
+    neighbor: "minimal",
     background: ["这里区分二十世纪六十年代的极简艺术与当代穿搭应用。把几何、重复和留白用在衣物或室内，是从艺术语言延伸出的设计方法。", "This guide distinguishes 1960s Minimalist art from contemporary styling. Geometry, repetition and negative space offer principles that can be applied to clothes or interiors."],
     difference: ["极简主义更强调几何、重复和比例；静物极简保留自然光、织纹和陶器微妙的不规则。", "Minimalism emphasizes geometry, repetition and proportion. Still-Life Minimal allows natural light, weave and subtle irregularities in ceramics to lead."],
     starter: ["把三个相近高度的物品放在同一条线上，试着拉开它们的间距。穿搭里从同色直筒裤和简单上衣做相同的比例练习。", "Line up three objects of similar height and try different spacing. Apply the same exercise to proportions using straight pants and a simple top in similar colors."],
