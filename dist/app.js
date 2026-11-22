@@ -105,6 +105,30 @@ const copy = {
 };
 
 const get = id => document.getElementById(id);
+const siteRoot = new URL(".", document.currentScript.src);
+const pathRouting = location.protocol === "https:" || location.protocol === "http:";
+const pages = new Set(["home", "styles", "quiz", "report", "credits", ...catalog.map(style => "style-" + style.id)]);
+
+function pageHref(page) {
+  return pathRouting ? new URL(page, siteRoot).pathname : "#" + page;
+}
+
+function pageFromPath(path) {
+  if (!path.startsWith(siteRoot.pathname)) return null;
+  const page = path.slice(siteRoot.pathname.length).replace(/(?:^|\/)index\.html$/, "").replace(/\/$/, "");
+  return pages.has(page) ? page : page === "" ? "home" : null;
+}
+
+function navigate(page) {
+  const href = pageHref(page);
+  if (!pathRouting && location.hash !== href) {
+    location.hash = href;
+    return;
+  }
+  if (pathRouting && href !== location.pathname + location.search + location.hash) history.pushState(null, "", href);
+  route();
+}
+
 const saved = {
   get(key) {
     try { return localStorage.getItem("aesthetic-" + key); } catch { return null; }
@@ -170,7 +194,7 @@ function finished() {
 
 function picture(image, alt, extra = "") {
   if (!image) return "";
-  return `<img ${extra} src="media/${image.file}" alt="${escapeHtml(alt)}" decoding="async">`;
+  return `<img ${extra} src="${new URL("media/" + image.file, siteRoot).href}" alt="${escapeHtml(alt)}" decoding="async">`;
 }
 
 function imageCredit(image) {
@@ -222,7 +246,7 @@ function renderLibrary() {
   get("count").textContent = visible.length ? `${visible.length} ${t("found")}` : t("noResults");
   get("style-grid").innerHTML = visible.map(style => {
     const text = styleText(style);
-    return `<a class="style-card" href="#style-${style.id}">
+    return `<a class="style-card" href="${pageHref("style-" + style.id)}">
       <div class="card-image">${picture(styleImages[style.id]?.[0], "", 'loading="lazy"')}</div>
       <div class="card-copy"><span class="card-category">${eraLabel(style.era)} · ${t(style.region)}</span><h3>${text.name}</h3><p>${text.elements.split(locale === "en" ? ", " : "、").slice(0, 3).join(" · ")}</p></div>
     </a>`;
@@ -245,10 +269,12 @@ function renderChrome() {
   renderTheme();
   document.querySelector("nav").setAttribute("aria-label", t("navigation"));
   get("brand").textContent = t("brand");
+  get("brand").href = pageHref("home");
   get("skip").textContent = t("skip");
   get("locale-label").textContent = t("language");
   get("locale").value = locale;
   get("nav-library").textContent = t("library");
+  get("nav-library").href = pageHref("styles");
   get("nav-quiz").textContent = t(finished() ? "report" : step ? "resume" : "quiz");
   get("nav-quiz").href = finished() ? "#report" : "#quiz";
   const image = styleImages.hero?.[0];
@@ -256,14 +282,14 @@ function renderChrome() {
     <div class="hero-copy">
       <h1>${t("heroTop")}<br><em>${t("heroBottom")}</em></h1>
       <p class="lede">${t("heroText")}</p>
-      <div class="hero-actions"><a class="button" id="hero-quiz" href="#quiz">${t("quiz")}</a><a class="text-link" href="#styles">${t("library")}</a></div>
+      <div class="hero-actions"><a class="button" id="hero-quiz" href="${pageHref("quiz")}">${t("quiz")}</a><a class="text-link" href="${pageHref("styles")}">${t("library")}</a></div>
     </div>
     <figure class="hero-art">
       ${picture(image, "", 'fetchpriority="high"')}
       <figcaption><span>${t("heroCaption")}</span>${image ? `<span>${imageCredit(image)}</span>` : ""}</figcaption>
     </figure>`;
   get("library-head").innerHTML = `<h2 id="library-title" tabindex="-1">${t("library")}</h2><p>${t("libraryText")}</p>`;
-  get("footer").innerHTML = `<a class="brand" href="#home">${t("brand")}</a><p>${t("privacy")}</p><a class="text-link" href="#credits">${t("credits")}</a>`;
+  get("footer").innerHTML = `<a class="brand" href="${pageHref("home")}">${t("brand")}</a><p>${t("privacy")}</p><a class="text-link" href="${pageHref("credits")}">${t("credits")}</a>`;
   renderFilters();
   renderLibrary();
   updateQuizLinks();
@@ -273,7 +299,7 @@ function updateQuizLinks() {
   const complete = finished();
   for (const id of ["nav-quiz", "hero-quiz"]) {
     get(id).textContent = t(complete ? "report" : step ? "resume" : "quiz");
-    get(id).href = complete ? "#report" : "#quiz";
+    get(id).href = pageHref(complete ? "report" : "quiz");
   }
 }
 
@@ -308,7 +334,7 @@ function renderQuiz(focus = true) {
           <label>${t("age")}<select name="age">${options(ages, profile.age)}</select></label>
           <label>${t("gender")}<select name="gender">${options(genders, profile.gender)}</select></label>
         </div>
-        <div class="flow-actions"><a class="text-link" href="#home">${t("home")}</a><button class="button" type="submit">${t("begin")}</button></div>
+        <div class="flow-actions"><a class="text-link" href="${pageHref("home")}">${t("home")}</a><button class="button" type="submit">${t("begin")}</button></div>
       </form>`;
     const form = get("profile-form");
     form.addEventListener("input", () => rememberProfile(form));
@@ -348,8 +374,7 @@ function renderQuiz(focus = true) {
         get("answer-error").hidden = false;
         form.querySelector("input").focus();
       } else if (step === quizLength()) {
-        if (location.hash === "#report") route();
-        else location.hash = "report";
+        navigate("report");
       } else {
         step++;
         renderQuiz();
@@ -374,7 +399,7 @@ function renderDetail(style) {
   const text = styleText(style);
   const images = styleImages[style.id] || [];
   get("detail-content").innerHTML = `
-    <div class="back-links"><a class="text-link" href="#styles">${t("backLibrary")}</a>${finished() ? `<a class="text-link" href="#report">${t("backReport")}</a>` : ""}</div>
+    <div class="back-links"><a class="text-link" href="${pageHref("styles")}">${t("backLibrary")}</a>${finished() ? `<a class="text-link" href="${pageHref("report")}">${t("backReport")}</a>` : ""}</div>
     <section class="feature">
       <div class="feature-copy"><p class="overline">${eraLabel(style.era)} · ${t(style.region)} · ${t(style.collection)}</p>
         <h1 tabindex="-1">${text.name}</h1><p class="lede">${text.description}</p>${palette(style)}
@@ -402,28 +427,28 @@ function renderReport() {
         <div class="recommendation-copy"><p class="overline">${t(markers[index])}</p><h2>${text.name}</h2><p>${text.description}</p>
           ${palette(style)}
           ${reasons.length ? `<p class="reason"><strong>${t("reportWhy")}</strong><br>${reasons.map(({ question, choice }) => questionText(question)[choice + 1]).join(" · ")}</p>` : ""}
-          <a class="text-link" href="#style-${style.id}">${t("reportMore")}</a></div></article>`;
+          <a class="text-link" href="${pageHref("style-" + style.id)}">${t("reportMore")}</a></div></article>`;
     }).join("")}</div>
     <section class="details-section"><h2>${t("inspiration")} · ${styleText(rank[0].style).name}</h2>${inspiration(styleText(rank[0].style))}</section>
-    <div class="flow-actions report-actions"><button class="button outline" id="edit" type="button">${t("edit")}</button><button class="button outline" id="restart" type="button">${t("restart")}</button><a class="text-link" href="#styles">${t("library")}</a></div>`;
+    <div class="flow-actions report-actions"><button class="button outline" id="edit" type="button">${t("edit")}</button><button class="button outline" id="restart" type="button">${t("restart")}</button><a class="text-link" href="${pageHref("styles")}">${t("library")}</a></div>`;
   get("edit").addEventListener("click", () => {
     step = 1;
-    location.hash = "quiz";
+    navigate("quiz");
   });
   get("restart").addEventListener("click", () => {
     step = 0;
     answers = [];
-    location.hash = "quiz";
+    navigate("quiz");
   });
 }
 
 function renderCredits() {
   const groups = [["hero", t("brand")], ...catalog.map(style => [style.id, styleText(style).name])];
   get("credits-content").innerHTML = `
-    <a class="text-link back-links" href="#home">${t("home")}</a>
+    <a class="text-link back-links" href="${pageHref("home")}">${t("home")}</a>
     <h1 tabindex="-1">${t("credits")}</h1><p class="lede">${t("creditIntro")}</p>
     <p class="lede">${t("fontIntro")}</p>
-    <ul class="elements">${Object.entries(fonts).map(([name, file]) => `<li><a href="fonts/${file}-OFL.txt">${name}</a></li>`).join("")}</ul>
+    <ul class="elements">${Object.entries(fonts).map(([name, file]) => `<li><a href="${new URL("fonts/" + file + "-OFL.txt", siteRoot).href}">${name}</a></li>`).join("")}</ul>
     <div class="credit-list">${groups.filter(([id]) => styleImages[id]?.length).map(([id, name]) =>
       `<section><h2>${name}</h2><ul>${styleImages[id].map(img =>
         `<li>${escapeHtml(img.title)} · ${imageCredit(img)}</li>`
@@ -433,20 +458,26 @@ function renderCredits() {
 
 function route({ focus = true, scroll = true } = {}) {
   const hash = location.hash.slice(1);
-  if (hash === "main") return;
-  const style = hash.startsWith("style-") && catalog.find(item => item.id === hash.slice(6));
+  if (hash === "main" && !pathRouting) return;
+  const legacyPage = pages.has(hash) ? hash : null;
+  const selected = legacyPage || (pathRouting ? pageFromPath(location.pathname) : null) || "home";
+  if (pathRouting && (legacyPage || !hash) && pageHref(selected) !== location.pathname + location.hash) {
+    history.replaceState(null, "", pageHref(selected) + location.search);
+  }
+  const style = selected.startsWith("style-") && catalog.find(item => item.id === selected.slice(6));
   let page = "home";
   if (style) page = "detail";
-  else if (hash === "report") page = finished() ? "report" : "quiz";
-  else if (hash === "quiz") page = "quiz";
-  else if (hash === "credits") page = "credits";
+  else if (selected === "report") page = finished() ? "report" : "quiz";
+  else if (selected === "quiz") page = "quiz";
+  else if (selected === "credits") page = "credits";
   for (const name of ["home", "detail", "report", "quiz", "credits"]) get(name + "-view").hidden = name !== page;
   updateQuizLinks();
   if (page === "detail") renderDetail(style);
   if (page === "quiz") renderQuiz(false);
   if (page === "report") renderReport();
   if (page === "credits") renderCredits();
-  if (hash === "styles") {
+  if (hash === "main") return;
+  if (selected === "styles") {
     if (focus) get("library-title").focus({ preventScroll: true });
     if (scroll) get("styles").scrollIntoView();
   } else {
@@ -472,6 +503,18 @@ get("theme").addEventListener("click", () => {
   saved.set("theme", theme);
   renderTheme();
 });
+document.addEventListener("click", event => {
+  if (!pathRouting || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest("a[href]");
+  if (!link || link.target || link.hasAttribute("download")) return;
+  const url = new URL(link.href);
+  if (url.origin !== siteRoot.origin || url.search || url.hash) return;
+  const page = pageFromPath(url.pathname);
+  if (!page) return;
+  event.preventDefault();
+  navigate(page);
+});
+window.addEventListener("popstate", () => route());
 window.addEventListener("hashchange", () => route());
 renderChrome();
 route();
