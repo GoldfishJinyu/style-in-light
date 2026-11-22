@@ -221,7 +221,11 @@
 [data-style="pixel"] .cover-frame img { image-rendering: pixelated; }
 [data-style="retrofuture"] .cover-frame { clip-path: none; border-radius: 48% 48% 3% 3% / 29% 29% 3% 3%; }
 [data-style="americana"] .cover-frame { border-radius: 1.6rem 1.6rem .1rem .1rem; border-block-end: .42rem double var(--stroke); }
-[data-style="coquette"] .emblem-stage i:first-child { inset: .4rem 4% auto auto; transform: rotate(-13deg); opacity: .42; }
+[data-style="coquette"] .emblem-stage i:first-child { inset: .75rem auto auto 1.5rem; width: clamp(4rem, 12vw, 9.5rem); transform: rotate(-13deg); opacity: .23; }
+[data-style="coquette"] .detail-cover::before {
+  top: -.9rem; left: 42%; width: 4.4rem; height: 2.7rem;
+  background: #d8afc1; clip-path: var(--emblem-shape); transform: rotate(-10deg);
+}
 [data-style="mori"] .cover-frame img { object-position: center 58%; }
 [data-style="minimalism"] .detail-heading .lede { max-width: 34ch; }
 [data-style="softcore"] .cover-frame { border-radius: 50% 50% .4rem .4rem / 14% 14% .4rem .4rem; }
@@ -235,6 +239,7 @@
   .detail-theme .detail-palette .swatches { flex-direction: row; width: min(100%, 13rem); height: 1.8rem; }
   .detail-theme[data-layout="archive"] .cover-frame { height: var(--art-height); }
   .detail-theme[data-layout="collage"] .detail-cover { transform: rotate(1deg); padding: .5rem; }
+  .detail-theme[data-style="coquette"] .emblem-stage i:first-child { inset: .35rem .5rem auto auto; width: 4.3rem; }
   .guide-chapters { grid-template-columns: minmax(0, 1fr); gap: .8rem; }
   .guide-chapters .chapter { grid-column: auto; }
 }
