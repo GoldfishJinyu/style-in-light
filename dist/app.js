@@ -448,7 +448,7 @@ function renderDetail(style) {
       </header>
       <figure class="detail-cover">
         <div class="cover-frame">${picture(images[0], 'fetchpriority="high"')}</div>
-        ${images[0] ? `<figcaption>${imageCredit(images[0])}</figcaption>` : ""}
+        ${images[0] ? `<figcaption><span>${imageCredit(images[0])}</span></figcaption>` : ""}
       </figure>
       <div class="detail-palette"><p>${t("palette")}</p>${palette(style.palette)}</div>
     </section>
