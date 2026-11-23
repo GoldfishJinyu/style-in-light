@@ -33,6 +33,8 @@ french-1.jpg|雨天巴黎咖啡馆外的成排椅子|Rows of café chairs outdoo
 french-2.jpg|收腰并带宽裙幅的深色连衣裙|A dark dress with a defined waist and wide skirt
 gothic-1.jpg|浅底上透空的黑色花边蕾丝|Open black floral lace on a light ground
 gothic-2.jpg|长教堂中殿里的连续尖拱|Repeated pointed arches along a cathedral nave
+jirai-silver-jewelry.jpg|粉黑玩偶旁的银色皇冠、十字吊坠和水钻首饰|Silver crown and cross pendants and rhinestone jewelry next to pink and black toys
+jirai-lace-wallpaper.jpg|黑白蕾丝拼贴，左侧是系蝴蝶结的玩偶，右侧是交叉系带|A black-and-white lace collage with bow-wearing dolls on the left and crisscross lacing on the right
 jirai-1.jpg|街头服饰店的橱窗与黑色叠搭|A street-fashion shop window displaying dark layered looks
 jirai-2.jpg|在白底上摊开的粉色缎带蝴蝶结|A pink satin bow on a white background
 jirai-3.jpg|一双黑色镂空短手套|A pair of short black openwork gloves

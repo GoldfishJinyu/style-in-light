@@ -160,3 +160,62 @@ const filmReferences = {
   color: ["《布达佩斯大饭店》——看对称构图和色块怎样组合。", "The Grand Budapest Hotel — watch how symmetry and color blocking work together."],
   urban: ["《她》——观察现代室内的材料、轮廓和玻璃反光。", "Her — look at materials, silhouettes and glass reflections in modern interiors."]
 };
+
+const additionalWorks = {
+  "gothic": [
+    {
+      "type": "tv",
+      "title": [
+        "《星期三》",
+        "Wednesday"
+      ],
+      "detail": [
+        "看科琳·阿特伍德如何用白领、黑色面料和不同的织纹，让黑白造型各有区别。",
+        "See how costume designer Colleen Atwood varies white collars, black fabrics and textures within a monochrome wardrobe."
+      ],
+      "source": "https://www.netflix.com/tudum/articles/jenna-ortega-wednesday-costumes-colleen-atwood"
+    }
+  ],
+  "cyberpunk": [
+    {
+      "type": "animation",
+      "title": [
+        "《攻壳机动队 STAND ALONE COMPLEX》",
+        "Ghost in the Shell: Stand Alone Complex"
+      ],
+      "detail": [
+        "观察城市夜景、机械义体和屏幕界面放在同一画面时，如何传递不同层次的信息。",
+        "Notice how city nights, cybernetic bodies and on-screen interfaces convey different layers of information."
+      ],
+      "source": "https://www.production-ig.com/contents/works/03_/000198.html"
+    }
+  ],
+  "y2k": [
+    {
+      "type": "manga",
+      "title": [
+        "《天堂之吻》（Paradise Kiss）",
+        "Paradise Kiss"
+      ],
+      "detail": [
+        "从矢泽爱的漫画里找当年的配饰和造型灵感，留意叠穿、剪裁与醒目的细节。",
+        "Look to Ai Yazawa’s fashion manga for accessories and styling cues, from layers and tailoring to statement details."
+      ],
+      "source": "https://kodansha.us/book/paradise-kiss/paradise-kiss/"
+    }
+  ],
+  "jirai": [
+    {
+      "type": "game",
+      "title": [
+        "《主播女孩重度依赖》",
+        "NEEDY STREAMER OVERLOAD"
+      ],
+      "detail": [
+        "把粉色桌面、像素图标和深色造型当成视觉灵感，观察可爱配色和尖锐气氛如何并存。",
+        "Look at how the pastel desktop, pixel icons and dark styling put an uneasy mood alongside cute colors."
+      ],
+      "source": "https://store.steampowered.com/app/1451940/NEEDY_GIRL_OVERDOSE/"
+    }
+  ]
+};

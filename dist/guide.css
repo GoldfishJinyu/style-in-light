@@ -99,3 +99,10 @@ select option:checked { color: var(--ink); background-color: var(--accent-tint);
   .trial-grid { grid-template-columns: 1fr; }
   .picture-options .option-label { gap: .4rem; padding-inline: .42rem; font-size: .9rem; }
 }
+
+.works-card { grid-column: 1 / -1; }
+.work-list { list-style: none; margin: .5rem 0 0; padding: 0; }
+.work-list li { display: grid; grid-template-columns: minmax(4.25rem, auto) minmax(0, 1fr); gap: .65rem; padding-block: .55rem; align-items: start; }
+.work-list li + li { border-top: 1px solid var(--line); }
+.work-type { justify-self: start; padding: .15rem .45rem; border: 1px solid var(--line); border-radius: .25rem; color: var(--accent); font-size: .78rem; font-weight: 650; white-space: nowrap; }
+.work-list a { display: inline-block; margin-bottom: .2rem; font-weight: 650; text-underline-offset: .18em; }

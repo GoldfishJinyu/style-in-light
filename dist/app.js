@@ -398,11 +398,18 @@ function inspiration(style, first = "wardrobe", useDisplay = false) {
     place: text.place,
     music: text.music
   };
-  cards.film = translate(feature?.film || filmReferences[style.id]);
+  const works = [{ type: "film", detail: feature?.film || filmReferences[style.id] }, ...(additionalWorks[style.id] || [])];
   return `<div class="details-grid">${[first, ...Object.keys(cards).filter(key => key !== first)].map(key => {
-    const label = ["artist", "place", "music", "film"].includes(key) ? ` <span class="mood-label">${t("atmosphere")}</span>` : "";
+    const label = ["artist", "place", "music"].includes(key) ? ` <span class="mood-label">${t("atmosphere")}</span>` : "";
     return `<article><h3>${t(key)}${label}</h3><p>${cards[key]}</p></article>`;
-  }).join("")}</div>`;
+  }).join("")}
+    <article class="works-card"><h3>${t("works")} <span class="mood-label">${t("atmosphere")}</span></h3>
+      <ul class="work-list">${works.map(work => `<li>
+        <span class="work-type">${t(work.type)}</span>
+        <div>${work.title ? `<a href="${escapeHtml(work.source)}" target="_blank" rel="noopener noreferrer">${translate(work.title)}</a>` : ""}
+          <p>${translate(work.detail)}</p></div>
+      </li>`).join("")}</ul>
+    </article></div>`;
 }
 
 function detailTags(style) {
