@@ -58,6 +58,8 @@ urban-1.jpeg|冷灰混凝土建筑的几何结构和阴影|Geometric forms and s
 urban-2.jpg|由金属管形成连续线条的座椅|Seating with continuous lines made of tubular metal
 victorian-1.jpg|深色上身与长裙组成的维多利亚步行服|Victorian walking dress with a dark bodice and long skirt
 victorian-2.jpg|椭圆形黑色哀悼胸针|An oval black mourning brooch
+y2k-pink-electronics.png|镶水钻的粉色翻盖手机和两台数码相机|A pink rhinestone-covered flip phone and two digital cameras
+y2k-pink-polka-dot-bag.png|粉色波点肩包、数码相机、粉色眼镜和随身小物|A pink polka-dot shoulder bag with a digital camera, pink glasses and everyday accessories
 y2k-1.jpg|手掌上的亮粉色翻盖手机|A glossy pink flip phone held in a hand
 y2k-2.jpg|半透明浅蓝外壳的旧掌机|A vintage handheld console with a translucent blue shell
 zassi-1.jpg|蓝白条纹棉衫的局部|A close view of blue and white stripes on a cotton top

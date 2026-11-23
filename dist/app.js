@@ -179,6 +179,7 @@ function imageCredit(image) {
   const record = imageLicenses[image?.file];
   if (!record) return t("imagePending");
   if (!verifiedImage(image)) {
+    if (record.displayApproved && !record.source) return t("imageProvided");
     const label = record.displayApproved ? t("imageSource") : t("imagePending");
     return `<a href="${escapeHtml(record.source)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
   }

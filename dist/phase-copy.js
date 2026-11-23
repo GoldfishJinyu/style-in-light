@@ -75,6 +75,7 @@ const phaseCopy = {
   chosenCue: ["可以先借用", "A cue to borrow"],
   imagePending: ["图片许可待核实", "Image licence pending"],
   imageSource: ["图片来源", "Image source"],
+  imageProvided: ["用户提供", "User-provided image"],
   licenseUnknown: ["许可未核实", "Licence unverified"],
   originalImage: ["原始文件", "Original file"],
   checked: ["核对日期", "Checked"],
