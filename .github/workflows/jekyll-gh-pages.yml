@@ -47,6 +47,8 @@ jobs:
         run: |
           for i in {1..8}; do
             if found=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" --jq 'select(.name == "github-pages" and .expired == false) | .id' 2>/dev/null) && [[ "$found" == "$ARTIFACT_ID" && -n "$found" ]]; then
+              # deploy-pages uses a separate artifact service that can lag behind this API.
+              sleep 15
               exit 0
             fi
             sleep 5
