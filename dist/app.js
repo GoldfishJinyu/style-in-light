@@ -387,18 +387,27 @@ function outfitIdea(style, useDisplay) {
   return styleText(style).outfit;
 }
 
+function referenceLink(url, label) {
+  return `<a class="reference-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+}
+
 function inspiration(style, first = "wardrobe", useDisplay = false) {
   const text = styleText(style);
-  const feature = featuredGuides[style.id];
+  const references = inspirationReferences[style.id];
+  const [filmTitle, filmNote] = translate(featuredGuides[style.id]?.film || filmReferences[style.id])
+    .split(locale === "en" ? " — " : "——");
   const cards = {
     wardrobe: outfitIdea(style, useDisplay),
     space: spaceIdea(style),
     objects: text.objects,
-    artist: text.art,
-    place: text.place,
-    music: text.music
+    artist: referenceLink(references.art, text.art),
+    place: `${text.place}<br>${referenceLink(references.place.url, translate(references.place.name))}`,
+    music: referenceLink(references.music, text.music)
   };
-  const works = [{ type: "film", detail: feature?.film || filmReferences[style.id] }, ...(additionalWorks[style.id] || [])];
+  const films = [{ type: "film", title: filmTitle, detail: filmNote, source: references.film }];
+  const works = films.concat((additionalWorks[style.id] || []).map(work => ({
+    ...work, title: translate(work.title), detail: translate(work.detail)
+  })));
   return `<div class="details-grid">${[first, ...Object.keys(cards).filter(key => key !== first)].map(key => {
     const label = ["artist", "place", "music"].includes(key) ? ` <span class="mood-label">${t("atmosphere")}</span>` : "";
     return `<article><h3>${t(key)}${label}</h3><p>${cards[key]}</p></article>`;
@@ -406,8 +415,8 @@ function inspiration(style, first = "wardrobe", useDisplay = false) {
     <article class="works-card"><h3>${t("works")} <span class="mood-label">${t("atmosphere")}</span></h3>
       <ul class="work-list">${works.map(work => `<li>
         <span class="work-type">${t(work.type)}</span>
-        <div>${work.title ? `<a href="${escapeHtml(work.source)}" target="_blank" rel="noopener noreferrer">${translate(work.title)}</a>` : ""}
-          <p>${translate(work.detail)}</p></div>
+        <div>${referenceLink(work.source, work.title)}
+          <p>${work.detail}</p></div>
       </li>`).join("")}</ul>
     </article></div>`;
 }
